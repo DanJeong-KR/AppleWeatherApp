@@ -13,6 +13,7 @@ class WeatherCollectionCell: UICollectionViewCell {
   override init(frame: CGRect) {
     super.init(frame: frame)
     backgroundColor = .red
+    makeConstraints()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -21,7 +22,7 @@ class WeatherCollectionCell: UICollectionViewCell {
   
   override func updateConstraints() {
     super.updateConstraints()
-    makeConstraints()
+    //makeConstraints()
   }
   
   private func makeConstraints() {

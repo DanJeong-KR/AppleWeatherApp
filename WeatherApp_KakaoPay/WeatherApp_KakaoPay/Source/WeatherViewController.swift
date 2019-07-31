@@ -16,6 +16,7 @@ final class WeatherViewController: UIViewController {
     c.register(cell: WeatherCollectionCell.self)
     c.dataSource = self
     c.delegate = self
+    
     view.addSubview(c)
     return c
   }()
@@ -24,6 +25,7 @@ final class WeatherViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view.
+    makeConstraints()
   }
   
   // MARK: - AutoLayout
@@ -44,11 +46,13 @@ final class WeatherViewController: UIViewController {
 // MARK: - Collection DataSource
 extension WeatherViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 0
+    return 1
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    return UICollectionViewCell()
+    
+    let cell = collectionView.dequeue(WeatherCollectionCell.self, indexPath)
+    return cell
   }
   
   
@@ -56,6 +60,10 @@ extension WeatherViewController: UICollectionViewDataSource {
 
 // MARK: - Collection FlowLayout and Delegate
 extension WeatherViewController: UICollectionViewDelegateFlowLayout {
-    
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    let size = (self.weatherCollectionView.bounds.width,
+                self.weatherCollectionView.bounds.height)
+    return CGSize(width: size.0, height: size.1)
+  }
 }
 
