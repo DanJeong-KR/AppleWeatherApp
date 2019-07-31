@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8EC2171322F1D787006CFD1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC2171222F1D787006CFD1D /* AppDelegate.swift */; };
-		8EC2171522F1D787006CFD1D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC2171422F1D787006CFD1D /* ViewController.swift */; };
+		8EC2171522F1D787006CFD1D /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC2171422F1D787006CFD1D /* WeatherViewController.swift */; };
 		8EC2171A22F1D789006CFD1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EC2171922F1D789006CFD1D /* Assets.xcassets */; };
 		8EC2171D22F1D789006CFD1D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EC2171B22F1D789006CFD1D /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -16,7 +16,7 @@
 /* Begin PBXFileReference section */
 		8EC2170F22F1D787006CFD1D /* WeatherApp_KakaoPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp_KakaoPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EC2171222F1D787006CFD1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8EC2171422F1D787006CFD1D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		8EC2171422F1D787006CFD1D /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
 		8EC2171922F1D789006CFD1D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8EC2171C22F1D789006CFD1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8EC2171E22F1D789006CFD1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -52,10 +52,7 @@
 		8EC2171122F1D787006CFD1D /* WeatherApp_KakaoPay */ = {
 			isa = PBXGroup;
 			children = (
-				8EC2172522F1E261006CFD1D /* DataModel */,
-				8EC2172622F1E277006CFD1D /* Service */,
 				8EC2172422F1E238006CFD1D /* Source */,
-				8EC2172722F1E281006CFD1D /* Utility */,
 				8EC2172822F1E28D006CFD1D /* Resource */,
 				8EC2172922F1E293006CFD1D /* SupportingFiles */,
 			);
@@ -66,7 +63,10 @@
 			isa = PBXGroup;
 			children = (
 				8EC2171222F1D787006CFD1D /* AppDelegate.swift */,
-				8EC2171422F1D787006CFD1D /* ViewController.swift */,
+				8EC2171422F1D787006CFD1D /* WeatherViewController.swift */,
+				8EC2172522F1E261006CFD1D /* DataModel */,
+				8EC2172622F1E277006CFD1D /* Service */,
+				8EC2172722F1E281006CFD1D /* Utility */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -179,7 +179,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EC2171522F1D787006CFD1D /* ViewController.swift in Sources */,
+				8EC2171522F1D787006CFD1D /* WeatherViewController.swift in Sources */,
 				8EC2171322F1D787006CFD1D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,12 +320,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KH53J489YG;
-				INFOPLIST_FILE = WeatherApp_KakaoPay/Info.plist;
+				INFOPLIST_FILE = WeatherApp_KakaoPay/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "iosSchool.changsik.WeatherApp-KakaoPay";
+				PRODUCT_BUNDLE_IDENTIFIER = "kr.changsik.WeatherApp-KakaoPay";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -338,12 +338,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KH53J489YG;
-				INFOPLIST_FILE = WeatherApp_KakaoPay/Info.plist;
+				INFOPLIST_FILE = WeatherApp_KakaoPay/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "iosSchool.changsik.WeatherApp-KakaoPay";
+				PRODUCT_BUNDLE_IDENTIFIER = "kr.changsik.WeatherApp-KakaoPay";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
