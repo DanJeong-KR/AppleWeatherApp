@@ -52,13 +52,61 @@
 		8EC2171122F1D787006CFD1D /* WeatherApp_KakaoPay */ = {
 			isa = PBXGroup;
 			children = (
+				8EC2172522F1E261006CFD1D /* DataModel */,
+				8EC2172622F1E277006CFD1D /* Service */,
+				8EC2172422F1E238006CFD1D /* Source */,
+				8EC2172722F1E281006CFD1D /* Utility */,
+				8EC2172822F1E28D006CFD1D /* Resource */,
+				8EC2172922F1E293006CFD1D /* SupportingFiles */,
+			);
+			path = WeatherApp_KakaoPay;
+			sourceTree = "<group>";
+		};
+		8EC2172422F1E238006CFD1D /* Source */ = {
+			isa = PBXGroup;
+			children = (
 				8EC2171222F1D787006CFD1D /* AppDelegate.swift */,
 				8EC2171422F1D787006CFD1D /* ViewController.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		8EC2172522F1E261006CFD1D /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DataModel;
+			sourceTree = "<group>";
+		};
+		8EC2172622F1E277006CFD1D /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		8EC2172722F1E281006CFD1D /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		8EC2172822F1E28D006CFD1D /* Resource */ = {
+			isa = PBXGroup;
+			children = (
 				8EC2171922F1D789006CFD1D /* Assets.xcassets */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		8EC2172922F1E293006CFD1D /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
 				8EC2171B22F1D789006CFD1D /* LaunchScreen.storyboard */,
 				8EC2171E22F1D789006CFD1D /* Info.plist */,
 			);
-			path = WeatherApp_KakaoPay;
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
