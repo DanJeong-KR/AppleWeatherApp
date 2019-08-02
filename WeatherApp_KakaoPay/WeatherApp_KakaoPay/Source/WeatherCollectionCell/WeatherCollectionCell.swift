@@ -15,7 +15,6 @@ class WeatherCollectionCell: UICollectionViewCell {
   override init(frame: CGRect) {
     super.init(frame: frame)
     backgroundColor = .red
-    makeConstraints()
     label.text = "test"
     self.addSubview(label)
   }
@@ -27,18 +26,5 @@ class WeatherCollectionCell: UICollectionViewCell {
   override func updateConstraints() {
     super.updateConstraints()
     //makeConstraints()
-  }
-  
-  private func makeConstraints() {
-    guard let superView = self.superview else {
-      return logger("SuperView of WeatherCollectionCell is nil")
-    }
-    self.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([
-      self.leadingAnchor.constraint(equalTo: superView.leadingAnchor),
-      self.trailingAnchor.constraint(equalTo: superView.trailingAnchor),
-      self.bottomAnchor.constraint(equalTo: superView.bottomAnchor),
-      self.topAnchor.constraint(equalTo: superView.topAnchor, constant: 200)
-      ])
   }
 }
