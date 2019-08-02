@@ -10,10 +10,14 @@ import UIKit
 
 class WeatherCollectionCell: UICollectionViewCell {
   
+  let label = UILabel(frame: CGRect(x: 30, y: 200, width: 100, height: 100))
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     backgroundColor = .red
     makeConstraints()
+    label.text = "test"
+    self.addSubview(label)
   }
   
   required init?(coder aDecoder: NSCoder) {

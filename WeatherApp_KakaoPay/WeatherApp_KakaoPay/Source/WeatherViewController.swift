@@ -12,8 +12,11 @@ final class WeatherViewController: UIViewController {
   // MARK: - Properties
   private lazy var weatherCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
+    layout.scrollDirection = .horizontal
     let c = UICollectionView(frame: .zero, collectionViewLayout: layout)
     c.register(cell: WeatherCollectionCell.self)
+    c.isPagingEnabled = true
+    
     c.dataSource = self
     c.delegate = self
     
@@ -46,7 +49,7 @@ final class WeatherViewController: UIViewController {
 // MARK: - Collection DataSource
 extension WeatherViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 1
+    return 3
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
