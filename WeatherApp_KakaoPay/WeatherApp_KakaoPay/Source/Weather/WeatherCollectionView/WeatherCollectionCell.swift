@@ -10,20 +10,31 @@ import UIKit
 
 class WeatherCollectionCell: UICollectionViewCell {
   
-  let label = UILabel(frame: CGRect(x: 30, y: 200, width: 100, height: 100))
+  private lazy var currentWeatherView: CurrentWeatherView = {
+    let v = CurrentWeatherView(frame: .zero)
+    v.backgroundColor = .clear
+    addSubview(v)
+    return v
+  }()
+  
+  internal var weatherViewHeightAnchor: NSLayoutConstraint?
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    label.text = "test"
-    self.addSubview(label)
   }
   
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
   }
   
-  override func updateConstraints() {
-    super.updateConstraints()
-    //makeConstraints()
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    makeConstraints()
+  }
+  
+  private func makeConstraints() {
+    currentWeatherView.layout.top().leading().trailing()
+    weatherViewHeightAnchor = currentWeatherView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.40)
+    weatherViewHeightAnchor?.isActive = true
   }
 }
