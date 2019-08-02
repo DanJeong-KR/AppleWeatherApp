@@ -14,7 +14,6 @@ class WeatherCollectionCell: UICollectionViewCell {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    backgroundColor = .red
     label.text = "test"
     self.addSubview(label)
   }

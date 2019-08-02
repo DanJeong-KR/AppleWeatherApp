@@ -10,37 +10,54 @@ import UIKit
 
 final class WeatherViewController: UIViewController {
   // MARK: - Properties
+  
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .lightContent
+  }
+  
+  private let backgroundImageView: UIImageView = {
+    let screenBounds = UIScreen.main.bounds
+    let iv = UIImageView(frame: screenBounds)
+    iv.image = UIImage(named: "night")
+    iv.contentMode = .scaleToFill
+    return iv
+  }()
+  
   private lazy var weatherCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
     let c = UICollectionView(frame: .zero, collectionViewLayout: layout)
     c.register(cell: WeatherCollectionCell.self)
     c.isPagingEnabled = true
-    
     c.dataSource = self
     c.delegate = self
+    c.backgroundColor = .clear
     
     view.addSubview(c)
     return c
+  }()
+  
+  
+  private lazy var weatherToolBar: WeatherToolBar = {
+    let tb = WeatherToolBar(frame: .zero)
+    view.addSubview(tb)
+    return tb
   }()
 
   // MARK: - VC LifeCycle
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view.
+    view.addSubview(backgroundImageView)
     makeConstraints()
   }
   
   // MARK: - AutoLayout
   private func makeConstraints() {
     let guide = view.safeAreaLayoutGuide
-    weatherCollectionView.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([
-      weatherCollectionView.topAnchor.constraint(equalTo: guide.topAnchor),
-      weatherCollectionView.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
-      weatherCollectionView.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
-      weatherCollectionView.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
-      ])
+    weatherCollectionView.layout.top().leading().trailing()
+    weatherToolBar.layout.top(equalTo: weatherCollectionView.bottomAnchor).leading().trailing().bottom()
+    
   }
 
 }
