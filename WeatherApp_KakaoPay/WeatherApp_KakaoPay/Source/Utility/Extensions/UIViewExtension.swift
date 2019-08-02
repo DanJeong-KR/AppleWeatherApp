@@ -20,7 +20,7 @@ extension UIView {
         topAnchor.constraint(equalTo: anchor, constant: c).isActive = true
         return self
       } else {
-        logger("\(ErrorLogs.autoLayout) : superview is nil")
+        logger("\(ErrorLog.layout.message) : superview is nil")
         fatalError()
       }
     }
@@ -31,7 +31,7 @@ extension UIView {
         leadingAnchor.constraint(equalTo: anchor, constant: c).isActive = true
         return self
       } else {
-        logger("\(ErrorLogs.autoLayout) : superview is nil")
+        logger("\(ErrorLog.layout.message) : superview is nil")
         fatalError()
       }
     }
@@ -42,7 +42,7 @@ extension UIView {
         bottomAnchor.constraint(equalTo: anchor, constant: c).isActive = true
         return self
       } else {
-        logger("\(ErrorLogs.autoLayout) : superview is nil")
+        logger("\(ErrorLog.layout.message) : superview is nil")
         fatalError()
       }
     }
@@ -53,7 +53,7 @@ extension UIView {
         trailingAnchor.constraint(equalTo: anchor, constant: c).isActive = true
         return self
       } else {
-        logger("\(ErrorLogs.autoLayout) : superview is nil")
+        logger("\(ErrorLog.layout.message) : superview is nil")
         fatalError()
       }
     }
@@ -64,7 +64,7 @@ extension UIView {
         centerYAnchor.constraint(equalTo: anchor, constant: c).isActive = true
         return self
       } else {
-        logger("\(ErrorLogs.autoLayout) : superview is nil")
+        logger("\(ErrorLog.layout.message) : superview is nil")
         fatalError()
       }
     }
@@ -75,7 +75,7 @@ extension UIView {
         centerXAnchor.constraint(equalTo: anchor, constant: c).isActive = true
         return self
       } else {
-        logger("\(ErrorLogs.autoLayout) : superview is nil")
+        logger("\(ErrorLog.layout.message) : superview is nil")
         fatalError()
       }
     }
@@ -87,7 +87,7 @@ extension UIView {
       topAnchor.constraint(equalTo: superview.topAnchor).isActive = true
       bottomAnchor.constraint(equalTo: superview.bottomAnchor).isActive = true
     } else {
-      logger("\(ErrorLogs.autoLayout) : superview is nil")
+      logger("\(ErrorLog.layout.message) : superview is nil")
       fatalError()
     }
   }
