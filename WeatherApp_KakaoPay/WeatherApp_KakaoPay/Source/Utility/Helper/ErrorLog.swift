@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ErrorLog: String {
+public enum ErrorLog: String {
   case layout = "Layout Error"
   case coderInit = "init(coder:) has not been implemented"
   

@@ -8,8 +8,9 @@
 
 import UIKit
 
-class CurrentWeatherView: UIView {
+class CurrentWeatherHeaderView: UICollectionReusableView {
   
+  // MARK: - Properties
   private lazy var locationLabel: UILabel = {
     let lb = UILabel(frame: .zero)
     lb.text = "성동구"
@@ -82,15 +83,17 @@ class CurrentWeatherView: UIView {
   }()
   
   
-  
+  // MARK: - Initializers
   override init(frame: CGRect) {
     super.init(frame: frame)
+    backgroundColor = .clear
   }
   
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
   }
   
+  // MARK: - Layout Methods
   override func layoutSubviews() {
     super.layoutSubviews()
     makeConstraints()

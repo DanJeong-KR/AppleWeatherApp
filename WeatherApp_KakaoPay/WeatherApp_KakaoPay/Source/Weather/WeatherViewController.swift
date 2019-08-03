@@ -24,13 +24,20 @@ final class WeatherViewController: UIViewController {
   }()
   
   private lazy var weatherCollectionView: UICollectionView = {
+    // init
     let layout = UICollectionViewFlowLayout()
+    
     layout.scrollDirection = .horizontal
     let c = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    
+    // collection 설정
     c.register(cell: WeatherCollectionCell.self)
-    c.isPagingEnabled = true
+    
     c.dataSource = self
     c.delegate = self
+    
+    // 레이아웃 설정
+    c.isPagingEnabled = true
     c.backgroundColor = .clear
     
     view.addSubview(c)
@@ -54,7 +61,6 @@ final class WeatherViewController: UIViewController {
   
   // MARK: - AutoLayout
   private func makeConstraints() {
-    let guide = view.safeAreaLayoutGuide
     weatherCollectionView.layout.top().leading().trailing()
     weatherToolBar.layout.top(equalTo: weatherCollectionView.bottomAnchor).leading().trailing().bottom()
     

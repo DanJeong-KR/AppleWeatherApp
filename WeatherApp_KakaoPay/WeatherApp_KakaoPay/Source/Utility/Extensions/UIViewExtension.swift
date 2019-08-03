@@ -6,7 +6,7 @@ import UIKit
  - translatesAutoresizingMaskIntoConstraints 실수 방지하려고 layout 만들었고
  - 오토레이아웃 잡는 시간 아끼기 위해 연쇄적으로 잡으려고 반환값을 self 로 해서 만들었습니다.
  */
-extension UIView {
+public extension UIView {
     var layout: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         return self
