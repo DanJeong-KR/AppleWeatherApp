@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CurrentWeatherHeaderView: UICollectionReusableView {
+class TopView: UIView {
   
   // MARK: - Properties
   private lazy var locationLabel: UILabel = {

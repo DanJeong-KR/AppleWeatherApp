@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		8E77126622F4675900B763DF /* ButtonID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E77126522F4675900B763DF /* ButtonID.swift */; };
 		8E77126922F522DA00B763DF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E77126822F522DA00B763DF /* Constants.swift */; };
-		8E77126B22F52B1700B763DF /* LocationWeatherCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E77126A22F52B1700B763DF /* LocationWeatherCollectionCell.swift */; };
+		8E77126D22F567D400B763DF /* CurrentWeatherHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E77126C22F567D400B763DF /* CurrentWeatherHeaderView.swift */; };
 		8E9F6DC722F3C4E600DB9869 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9F6DC622F3C4E600DB9869 /* UIViewExtension.swift */; };
 		8E9F6DC922F3C7F900DB9869 /* ErrorLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9F6DC822F3C7F900DB9869 /* ErrorLog.swift */; };
-		8E9F6DD022F3D2FC00DB9869 /* CurrentWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9F6DCF22F3D2FC00DB9869 /* CurrentWeatherView.swift */; };
+		8E9F6DD022F3D2FC00DB9869 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9F6DCF22F3D2FC00DB9869 /* TopView.swift */; };
 		8E9F6DD322F3D32700DB9869 /* SecondCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9F6DD222F3D32700DB9869 /* SecondCollectionCell.swift */; };
 		8E9F6DD922F3D47600DB9869 /* HourlyTableHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9F6DD822F3D47600DB9869 /* HourlyTableHeaderCell.swift */; };
 		8E9F6DDC22F3D5D500DB9869 /* WeatherTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9F6DDB22F3D5D500DB9869 /* WeatherTableView.swift */; };
@@ -36,10 +36,10 @@
 /* Begin PBXFileReference section */
 		8E77126522F4675900B763DF /* ButtonID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonID.swift; sourceTree = "<group>"; };
 		8E77126822F522DA00B763DF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		8E77126A22F52B1700B763DF /* LocationWeatherCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationWeatherCollectionCell.swift; sourceTree = "<group>"; };
+		8E77126C22F567D400B763DF /* CurrentWeatherHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherHeaderView.swift; sourceTree = "<group>"; };
 		8E9F6DC622F3C4E600DB9869 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		8E9F6DC822F3C7F900DB9869 /* ErrorLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLog.swift; sourceTree = "<group>"; };
-		8E9F6DCF22F3D2FC00DB9869 /* CurrentWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherView.swift; sourceTree = "<group>"; };
+		8E9F6DCF22F3D2FC00DB9869 /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		8E9F6DD222F3D32700DB9869 /* SecondCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondCollectionCell.swift; sourceTree = "<group>"; };
 		8E9F6DD822F3D47600DB9869 /* HourlyTableHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyTableHeaderCell.swift; sourceTree = "<group>"; };
 		8E9F6DDB22F3D5D500DB9869 /* WeatherTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTableView.swift; sourceTree = "<group>"; };
@@ -73,20 +73,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8E9F6DCA22F3D24F00DB9869 /* WeatherCollectionCell */ = {
+		8E9F6DCA22F3D24F00DB9869 /* LocationWeatherCollectionView */ = {
 			isa = PBXGroup;
 			children = (
-				8E77126A22F52B1700B763DF /* LocationWeatherCollectionCell.swift */,
 				8E9F6DCE22F3D2CC00DB9869 /* FirstCollectionCell */,
 				8E9F6DD122F3D30300DB9869 /* SecondCollectionCell */,
 			);
-			path = WeatherCollectionCell;
+			path = LocationWeatherCollectionView;
 			sourceTree = "<group>";
 		};
 		8E9F6DCE22F3D2CC00DB9869 /* FirstCollectionCell */ = {
 			isa = PBXGroup;
 			children = (
-				8E9F6DCF22F3D2FC00DB9869 /* CurrentWeatherView.swift */,
 			);
 			path = FirstCollectionCell;
 			sourceTree = "<group>";
@@ -132,7 +130,9 @@
 			isa = PBXGroup;
 			children = (
 				8EC2172A22F1F057006CFD1D /* WeatherCollectionCell.swift */,
-				8E9F6DCA22F3D24F00DB9869 /* WeatherCollectionCell */,
+				8E77126C22F567D400B763DF /* CurrentWeatherHeaderView.swift */,
+				8E9F6DCF22F3D2FC00DB9869 /* TopView.swift */,
+				8E9F6DCA22F3D24F00DB9869 /* LocationWeatherCollectionView */,
 			);
 			path = WeatherCollectionView;
 			sourceTree = "<group>";
@@ -336,16 +336,16 @@
 				8E77126622F4675900B763DF /* ButtonID.swift in Sources */,
 				8EC2172B22F1F057006CFD1D /* WeatherCollectionCell.swift in Sources */,
 				8E9F6DE122F3D6C600DB9869 /* HourlyCollectionCell.swift in Sources */,
+				8E77126D22F567D400B763DF /* CurrentWeatherHeaderView.swift in Sources */,
 				8EC2171322F1D787006CFD1D /* AppDelegate.swift in Sources */,
 				8E9F6DDC22F3D5D500DB9869 /* WeatherTableView.swift in Sources */,
 				8E9F6DE322F3D73E00DB9869 /* DailyTableCell.swift in Sources */,
-				8E77126B22F52B1700B763DF /* LocationWeatherCollectionCell.swift in Sources */,
 				8E77126922F522DA00B763DF /* Constants.swift in Sources */,
 				8EC2173522F1F41B006CFD1D /* Identifiable.swift in Sources */,
 				8EC2172D22F1F3D9006CFD1D /* Logger.swift in Sources */,
 				8E9F6DC722F3C4E600DB9869 /* UIViewExtension.swift in Sources */,
 				8E9F6DD922F3D47600DB9869 /* HourlyTableHeaderCell.swift in Sources */,
-				8E9F6DD022F3D2FC00DB9869 /* CurrentWeatherView.swift in Sources */,
+				8E9F6DD022F3D2FC00DB9869 /* TopView.swift in Sources */,
 				8E9F6DDF22F3D69700DB9869 /* HourlyCollectionView.swift in Sources */,
 				8E9F6DC922F3C7F900DB9869 /* ErrorLog.swift in Sources */,
 				8E9F6DF522F44DBA00DB9869 /* WeatherToolBar.swift in Sources */,

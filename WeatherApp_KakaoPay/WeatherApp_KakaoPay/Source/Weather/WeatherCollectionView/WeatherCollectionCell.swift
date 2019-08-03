@@ -10,24 +10,26 @@ import UIKit
 class WeatherCollectionCell: UICollectionViewCell {
 
   // MARK: - Properties
-  private lazy var currentWeatherView: CurrentWeatherHeaderView = {
-    let v = CurrentWeatherHeaderView(frame: .zero)
-    addSubview(v)
-    return v
+  private lazy var locationWeatherCollectionView: UICollectionView = {
+    // layout
+    let layout = UICollectionViewFlowLayout()
+    layout.scrollDirection = .vertical
+    layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    layout.headerReferenceSize = CGSize(width: ScreenBounds.width,
+                                        height: ScreenBounds.height * 0.4)
+    // init
+    let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+//    cv.register(CurrentWeatherTopView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CurrentWeatherTopView.identifier)
+//    cv.register(cell: SecondCollectionCell.self)
+    cv.dataSource = self
+    cv.delegate = self
+    // configure
+    cv.backgroundColor = .clear
+    addSubview(cv)
+    return cv
   }()
   
-  private lazy var weatherTableView: UITableView = {
-    let tv = UITableView(frame: .zero)
-    tv.backgroundColor = .clear
-    tv.rowHeight = 100
-    tv.showsVerticalScrollIndicator = false
-    tv.dataSource = self
-    addSubview(tv)
-    return tv
-  }()
-  
-  internal var weatherViewHeightAnchor: NSLayoutConstraint?
-  
+
   // MARK: - Initializers
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -43,26 +45,35 @@ class WeatherCollectionCell: UICollectionViewCell {
     makeConstraints()
   }
   
+  internal var currentWeatherTopViewHeight: NSLayoutConstraint?
+  
   private func makeConstraints() {
-//    currentWeatherView.layout.top().leading().trailing()
-//    weatherViewHeightAnchor = currentWeatherView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.40)
-//    weatherViewHeightAnchor?.isActive = true
-    
-    weatherTableView.layout.top().leading().trailing().bottom()
+    currentWeatherTopView.layout.top().leading().trailing()
+    currentWeatherTopViewHeight = currentWeatherTopView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.4)
+    currentWeatherTopViewHeight?.isActive = true
+    locationWeatherCollectionView.layout.top(equalTo: <#T##NSLayoutYAxisAnchor?#>, constant: <#T##CGFloat#>).bottom().leading().trailing()
   }
 }
 
-// MARK: - TableView DataSource
-extension WeatherCollectionCell: UITableViewDataSource {
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 20
+extension WeatherCollectionCell: UICollectionViewDataSource {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 1
   }
   
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = UITableViewCell()
-    cell.textLabel?.text = "test"
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeue(SecondCollectionCell.self, indexPath)
     return cell
   }
   
-  
+//  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//    let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CurrentWeatherTopView.identifier, for: indexPath) as! CurrentWeatherTopView
+//    return header
+//  }
+}
+
+extension WeatherCollectionCell: UICollectionViewDelegateFlowLayout {
+//  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//    let cellHeight = self.frame.height - self.
+//    return CGSize(width: ScreenBounds.width, height: self.frame)
+//  }
 }
