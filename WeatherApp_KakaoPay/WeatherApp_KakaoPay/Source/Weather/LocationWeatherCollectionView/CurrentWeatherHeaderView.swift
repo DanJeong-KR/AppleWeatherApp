@@ -22,6 +22,8 @@ class CurrentWeatherHeaderView: UICollectionReusableView {
     
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
+    layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    //layout.minimumLineSpacing = 0
     let bcv = BottomCollectionView(frame: .zero, collectionViewLayout: layout)
     addSubview(bcv)
     return bcv

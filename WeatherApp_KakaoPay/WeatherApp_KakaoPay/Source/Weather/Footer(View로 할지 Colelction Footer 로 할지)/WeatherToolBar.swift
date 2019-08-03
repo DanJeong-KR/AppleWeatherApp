@@ -71,6 +71,7 @@ class WeatherToolBar: UIToolbar {
       print("detailWeatherButton 버튼 클릭")
     case ButtonID.locationListButton.id:
       print("locationListButton 버튼 클릭")
+      
     default:
       break
     }

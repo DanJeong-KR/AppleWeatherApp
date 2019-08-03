@@ -9,7 +9,8 @@
 import UIKit
 
 class LocationWeatherCollectionView: UICollectionView {
-
+  
+  // MARK: - Initializers
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
     super.init(frame: frame, collectionViewLayout: layout)
     
@@ -21,6 +22,7 @@ class LocationWeatherCollectionView: UICollectionView {
     fatalError(ErrorLog.coderInit.message)
   }
   
+  // MARK: - Configure
   private func configure() {
     register(CurrentWeatherHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CurrentWeatherHeaderView.identifier)
     register(cell: FirstCollectionCell.self)
@@ -35,6 +37,7 @@ class LocationWeatherCollectionView: UICollectionView {
 
 }
 
+// MARK: - CollectionView DataSource
 extension LocationWeatherCollectionView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return 3
@@ -62,6 +65,7 @@ extension LocationWeatherCollectionView: UICollectionViewDataSource {
   }
 }
 
+// MARK: - CollectionView FlowLayout
 extension LocationWeatherCollectionView: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     switch indexPath.item {

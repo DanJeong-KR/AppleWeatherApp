@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window?.makeKeyAndVisible()
     window?.backgroundColor = .white
     window?.rootViewController = WeatherViewController()
+//    window?.rootViewController = MyWeatherListViewController()
     
     return true
   }
