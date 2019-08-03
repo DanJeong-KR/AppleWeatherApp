@@ -18,14 +18,11 @@ class CurrentWeatherHeaderView: UICollectionReusableView {
     return tv
   }()
   
-  private lazy var bottomCollectionView: UICollectionView = {
+  private lazy var bottomCollectionView: BottomCollectionView = {
     
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
-    let bcv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-//    bcv.dataSource = self
-//    bcv.delegate = self
-    bcv.backgroundColor = .yellow
+    let bcv = BottomCollectionView(frame: .zero, collectionViewLayout: layout)
     addSubview(bcv)
     return bcv
   }()
@@ -46,25 +43,9 @@ class CurrentWeatherHeaderView: UICollectionReusableView {
   }
   
   private func makeConstraints() {
-    topView.layout.top().leading().trailing()
+    topView.layout.top().leading().trailing().height(multiplier: 0.75)
     bottomCollectionView.layout.top(equalTo: topView.bottomAnchor).leading().trailing().bottom()
   }
   
-  
-}
-
-// MARK: - CollectionView DataSource
-extension CurrentWeatherHeaderView: UICollectionViewDataSource {
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 0
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    return UICollectionViewCell()
-  }
-  
-}
-// MARK: - CollectionView FlowLayout
-extension CurrentWeatherHeaderView: UICollectionViewDelegateFlowLayout {
   
 }

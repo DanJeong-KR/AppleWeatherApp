@@ -80,7 +80,31 @@ public extension UIView {
       }
     }
   
-  public func equalToSuperView() {
+  @discardableResult
+  func height(equalTo anchor: NSLayoutDimension? = nil, constant c: CGFloat = 0, multiplier m: CGFloat = 1) -> Self {
+    if let superview = superview {
+      let anchor = anchor ?? superview.safeAreaLayoutGuide.heightAnchor
+      heightAnchor.constraint(equalTo: anchor, multiplier: m, constant: c).isActive = true
+      return self
+    } else {
+      logger("\(ErrorLog.layout.message) : superview is nil")
+      fatalError()
+    }
+  }
+  
+  @discardableResult
+  func width(equalTo anchor: NSLayoutDimension? = nil, constant c: CGFloat = 0, multiplier m: CGFloat = 1) -> Self {
+    if let superview = superview {
+      let anchor = anchor ?? superview.safeAreaLayoutGuide.widthAnchor
+      widthAnchor.constraint(equalTo: anchor, multiplier: m, constant: c).isActive = true
+      return self
+    } else {
+      logger("\(ErrorLog.layout.message) : superview is nil")
+      fatalError()
+    }
+  }
+  
+  func equalToSuperView() {
     if let superview = superview {
       leftAnchor.constraint(equalTo: superview.leftAnchor).isActive = true
       rightAnchor.constraint(equalTo: superview.rightAnchor).isActive = true
