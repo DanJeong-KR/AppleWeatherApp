@@ -18,6 +18,7 @@ class WeatherCollectionCell: UICollectionViewCell {
     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     layout.headerReferenceSize = CGSize(width: ScreenBounds.width,
                                         height: ScreenBounds.height * 0.55)
+    layout.sectionHeadersPinToVisibleBounds = true
     // init
     let cv = LocationWeatherCollectionView(frame: .zero, collectionViewLayout: layout)
     

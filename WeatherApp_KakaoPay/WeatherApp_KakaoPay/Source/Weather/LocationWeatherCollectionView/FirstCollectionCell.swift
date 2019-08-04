@@ -6,11 +6,21 @@
 //  Copyright © 2019 chang sic jung. All rights reserved.
 //
 
-
-// tableview
 import UIKit
 
 class FirstCollectionCell: UICollectionViewCell {
+  
+  
+  private lazy var dailyWeatherCollectionView: UICollectionView = {
+    let layout = UICollectionViewFlowLayout()
+    layout.scrollDirection = .vertical
+    let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    cv.dataSource = self
+    cv.register(cell: DailyWeatherCollectionCell.self)
+    cv.allowsSelection = false
+    addSubview(cv)
+    return cv
+  }()
   
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
@@ -18,7 +28,21 @@ class FirstCollectionCell: UICollectionViewCell {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    backgroundColor = .red
+    backgroundColor = .clear
   }
+}
+
+extension FirstCollectionCell: UICollectionViewDataSource {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 9
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeue(DailyWeatherCollectionCell.self, indexPath)
+    
+    return cell
+  }
+  
+  
 }
 

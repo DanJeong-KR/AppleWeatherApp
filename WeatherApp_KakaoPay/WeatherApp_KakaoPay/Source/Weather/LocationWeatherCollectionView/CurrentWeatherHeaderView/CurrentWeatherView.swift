@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TopView: UIView {
+class CurrentWeatherView: UIView {
   
   // MARK: - Properties
   private lazy var locationLabel: UILabel = {
@@ -110,7 +110,6 @@ class TopView: UIView {
     
     tempStackView.layout.trailing(constant: -10).bottom(constant: -5)
   }
-  
 }
 
 

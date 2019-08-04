@@ -8,11 +8,17 @@
 
 import UIKit
 
-class BottomCollectionView: UICollectionView {
+class HourlyCollectionView: UICollectionView {
+  
+  private lazy var separateLineView: SeparateLineView = {
+    let slv = SeparateLineView(frame: .zero)
+    addSubview(slv)
+    return slv
+  }()
   
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
     super.init(frame: frame, collectionViewLayout: layout)
-    backgroundColor = .yellow
+    backgroundColor = .clear
     configure()
   }
   
@@ -25,27 +31,25 @@ class BottomCollectionView: UICollectionView {
     showsHorizontalScrollIndicator = false
     self.dataSource = self
     self.delegate = self
-    self.register(cell: UICollectionViewCell.self)
+    self.register(cell: HourlyCollectionCell.self)
   }
-
 }
 
 // MARK: - CollectionView DataSource
-extension BottomCollectionView: UICollectionViewDataSource {
+extension HourlyCollectionView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return 10
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeue(UICollectionViewCell.self, indexPath)
-    cell.backgroundColor = .green
+    let cell = collectionView.dequeue(HourlyCollectionCell.self, indexPath)
     return cell
   }
   
 }
 // MARK: - CollectionView FlowLayout
-extension BottomCollectionView: UICollectionViewDelegateFlowLayout {
+extension HourlyCollectionView: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: ScreenBounds.width / 3, height: self.frame.height)
+    return CGSize(width: 80, height: self.frame.height)
   }
 }

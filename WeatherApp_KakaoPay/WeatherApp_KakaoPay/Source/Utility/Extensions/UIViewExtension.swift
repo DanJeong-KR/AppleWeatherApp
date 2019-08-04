@@ -83,8 +83,13 @@ public extension UIView {
   @discardableResult
   func height(equalTo anchor: NSLayoutDimension? = nil, constant c: CGFloat = 0, multiplier m: CGFloat = 1) -> Self {
     if let superview = superview {
-      let anchor = anchor ?? superview.safeAreaLayoutGuide.heightAnchor
-      heightAnchor.constraint(equalTo: anchor, multiplier: m, constant: c).isActive = true
+      if c == 0 {
+        let anchor = anchor ?? superview.safeAreaLayoutGuide.heightAnchor
+        heightAnchor.constraint(equalTo: anchor, multiplier: m, constant: c).isActive = true
+      } else {
+        heightAnchor.constraint(equalToConstant: c).isActive = true
+      }
+      
       return self
     } else {
       logger("\(ErrorLog.layout.message) : superview is nil")

@@ -24,7 +24,7 @@ class LocationWeatherCollectionView: UICollectionView {
   
   // MARK: - Configure
   private func configure() {
-    register(CurrentWeatherHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CurrentWeatherHeaderView.identifier)
+    register(LocationWeatherHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: LocationWeatherHeaderView.identifier)
     register(cell: FirstCollectionCell.self)
     register(cell: SecondCollectionCell.self)
     register(cell: ThirdCollectionCell.self)
@@ -60,7 +60,7 @@ extension LocationWeatherCollectionView: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CurrentWeatherHeaderView.identifier, for: indexPath) as! CurrentWeatherHeaderView
+    let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LocationWeatherHeaderView.identifier, for: indexPath) as! LocationWeatherHeaderView
     return header
   }
 }
