@@ -10,12 +10,7 @@ import UIKit
 
 class HourlyCollectionView: UICollectionView {
   
-  private lazy var separateLineView: SeparateLineView = {
-    let slv = SeparateLineView(frame: .zero)
-    addSubview(slv)
-    return slv
-  }()
-  
+  // MARK: - Initializers
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
     super.init(frame: frame, collectionViewLayout: layout)
     backgroundColor = .clear
@@ -27,6 +22,7 @@ class HourlyCollectionView: UICollectionView {
     fatalError(ErrorLog.coderInit.message)
   }
   
+  // MARK: - configure
   private func configure() {
     showsHorizontalScrollIndicator = false
     self.dataSource = self

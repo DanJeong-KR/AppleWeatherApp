@@ -15,10 +15,11 @@ class WeatherCollectionCell: UICollectionViewCell {
     // layout
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .vertical
+    layout.minimumLineSpacing = 0
     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     layout.headerReferenceSize = CGSize(width: ScreenBounds.width,
                                         height: ScreenBounds.height * 0.55)
-    layout.sectionHeadersPinToVisibleBounds = true
+    //layout.sectionHeadersPinToVisibleBounds = true
     // init
     let cv = LocationWeatherCollectionView(frame: .zero, collectionViewLayout: layout)
     
@@ -30,6 +31,7 @@ class WeatherCollectionCell: UICollectionViewCell {
   // MARK: - Initializers
   override init(frame: CGRect) {
     super.init(frame: frame)
+    makeConstraints()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -39,7 +41,6 @@ class WeatherCollectionCell: UICollectionViewCell {
   // MARK: - Layout Methods
   override func layoutSubviews() {
     super.layoutSubviews()
-    makeConstraints()
   }
   
   private func makeConstraints() {

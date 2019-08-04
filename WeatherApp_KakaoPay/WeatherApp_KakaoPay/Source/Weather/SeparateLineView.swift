@@ -17,7 +17,7 @@ class SeparateLineView: UIView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    backgroundColor = .gray
+    backgroundColor = WeatherColor.separateLineColor
   }
   
   // MARK: - Layout Methods

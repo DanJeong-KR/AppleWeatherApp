@@ -26,7 +26,7 @@ final class WeatherViewController: UIViewController {
   private lazy var weatherCollectionView: UICollectionView = {
     // init
     let layout = UICollectionViewFlowLayout()
-    
+    layout.minimumLineSpacing = 0
     layout.scrollDirection = .horizontal
     let c = UICollectionView(frame: .zero, collectionViewLayout: layout)
     
@@ -91,11 +91,5 @@ extension WeatherViewController: UICollectionViewDelegateFlowLayout {
                 self.weatherCollectionView.bounds.height)
     return CGSize(width: size.0, height: size.1)
   }
-  
-  // 컬렉션 구분선 없애기
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-    return 0
-  }
-  
 }
 

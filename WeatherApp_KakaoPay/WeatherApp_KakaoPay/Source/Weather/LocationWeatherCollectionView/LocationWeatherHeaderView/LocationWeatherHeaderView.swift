@@ -11,8 +11,8 @@ import UIKit
 class LocationWeatherHeaderView: UICollectionReusableView {
   
   // MARK: - Properties
-  private lazy var currentWeatherView: CurrentWeatherView = {
-    let tv = CurrentWeatherView(frame: .zero)
+  private lazy var currentWeatherView: CurrentLocationWeatherView = {
+    let tv = CurrentLocationWeatherView(frame: .zero)
     
     addSubview(tv)
     return tv
@@ -47,18 +47,30 @@ class LocationWeatherHeaderView: UICollectionReusableView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
+    makeConstraints()
   }
   
   // MARK: - Layout Methods
   override func layoutSubviews() {
     super.layoutSubviews()
-    makeConstraints()
+    print("Haha")
+    //makeConstraints()
   }
   
+  internal var currentWeatherViewHeightConstraint: NSLayoutConstraint!
   private func makeConstraints() {
-    currentWeatherView.layout.top().leading().trailing().height(multiplier: 0.75)
+    // currentWeatherView
+    currentWeatherView.layout.top().leading().trailing()
+    currentWeatherViewHeightConstraint = currentWeatherView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.75)
+    currentWeatherViewHeightConstraint?.isActive = true
+    
+    // 구분선
     firstSeparateLineView.makeConstraints(atBottom: currentWeatherView.bottomAnchor)
-    hourlyCollectionView.layout.top(equalTo: currentWeatherView.bottomAnchor).leading().trailing().bottom()
+    
+    // hourlyCollectionView
+    hourlyCollectionView.layout.leading().trailing().bottom().height(equalTo: self.heightAnchor, multiplier: 0.25)
+    
+    // 구분선
     secondSeparateLineView.makeConstraints(atBottom: hourlyCollectionView.bottomAnchor)
   }
   

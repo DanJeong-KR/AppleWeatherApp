@@ -87,9 +87,9 @@ public extension UIView {
         let anchor = anchor ?? superview.safeAreaLayoutGuide.heightAnchor
         heightAnchor.constraint(equalTo: anchor, multiplier: m, constant: c).isActive = true
       } else {
+        // FIXME: - contant 에 값을 주면 전체 높이에서 계산되는 문제
         heightAnchor.constraint(equalToConstant: c).isActive = true
       }
-      
       return self
     } else {
       logger("\(ErrorLog.layout.message) : superview is nil")
@@ -100,8 +100,12 @@ public extension UIView {
   @discardableResult
   func width(equalTo anchor: NSLayoutDimension? = nil, constant c: CGFloat = 0, multiplier m: CGFloat = 1) -> Self {
     if let superview = superview {
-      let anchor = anchor ?? superview.safeAreaLayoutGuide.widthAnchor
-      widthAnchor.constraint(equalTo: anchor, multiplier: m, constant: c).isActive = true
+      if c == 0 {
+        let anchor = anchor ?? superview.safeAreaLayoutGuide.heightAnchor
+        heightAnchor.constraint(equalTo: anchor, multiplier: m, constant: c).isActive = true
+      } else {
+        heightAnchor.constraint(equalToConstant: c).isActive = true
+      }
       return self
     } else {
       logger("\(ErrorLog.layout.message) : superview is nil")
@@ -119,5 +123,10 @@ public extension UIView {
       logger("\(ErrorLog.layout.message) : superview is nil")
       fatalError()
     }
+  }
+  
+  func setImageSize(with constant: CGFloat) {
+    heightAnchor.constraint(equalToConstant: constant).isActive = true
+    widthAnchor.constraint(equalToConstant: constant).isActive = true
   }
 }
