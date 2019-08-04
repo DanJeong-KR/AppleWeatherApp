@@ -1,9 +1,9 @@
 //
-//  UITableViewExtensions.swift
-//  WeatherForecast
+//  TableCollectionExtensions.swift
+//  WeatherApp_KakaoPay
 //
-//  Created by giftbot on 14/06/2019.
-//  Copyright © 2019 giftbot. All rights reserved.
+//  Created by Sicc on 04/08/2019.
+//  Copyright © 2019 chang sic jung. All rights reserved.
 //
 
 import UIKit
@@ -24,7 +24,7 @@ public extension UITableView {
     ) where Cell: UITableViewCell {
     register(cell, forCellReuseIdentifier: reuseIdentifier)
   }
-    
+  
   func dequeue<Cell>(_ reusableCell: Cell.Type) -> Cell where Cell: UITableViewCell {
     guard let cell = dequeueReusableCell(
       withIdentifier: reusableCell.identifier
@@ -34,18 +34,18 @@ public extension UITableView {
 }
 
 public extension UICollectionView {
-    func register<Cell> (
-        cell: Cell.Type,
-        forCellReuseIdentifier reuseIdentifier: String = Cell.identifier
-        ) where Cell: UICollectionViewCell {
-        register(cell, forCellWithReuseIdentifier: reuseIdentifier)
-    }
-    
-    func dequeue<Cell>(
-        _ reusableCell: Cell.Type,
-        _ indexpath: IndexPath) -> Cell where Cell: UICollectionViewCell {
-        guard let cell = dequeueReusableCell(withReuseIdentifier: reusableCell.identifier, for: indexpath) as? Cell else { fatalError("Could not find cell with identifier") }
-        return cell
-    }
+  func register<Cell> (
+    cell: Cell.Type,
+    forCellReuseIdentifier reuseIdentifier: String = Cell.identifier
+    ) where Cell: UICollectionViewCell {
+    register(cell, forCellWithReuseIdentifier: reuseIdentifier)
+  }
+  
+  func dequeue<Cell>(
+    _ reusableCell: Cell.Type,
+    _ indexpath: IndexPath) -> Cell where Cell: UICollectionViewCell {
+    guard let cell = dequeueReusableCell(withReuseIdentifier: reusableCell.identifier, for: indexpath) as? Cell else { fatalError("Could not find cell with identifier") }
+    return cell
+  }
 }
 
