@@ -10,7 +10,9 @@ import UIKit
 
 class LocationWeatherCollectionView: UICollectionView {
   
-  var headerView: LocationWeatherHeaderView?
+  // MARK: Networking
+  private let weatherService: WeatherServiceType = WeatherService()
+  var currently: Currently?
   
   // MARK: - Initializers
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
@@ -36,7 +38,7 @@ class LocationWeatherCollectionView: UICollectionView {
     backgroundColor = .clear
     showsVerticalScrollIndicator = false
   }
-
+  
 }
 
 // MARK: - CollectionView DataSource
@@ -64,7 +66,6 @@ extension LocationWeatherCollectionView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LocationWeatherHeaderView.identifier, for: indexPath) as! LocationWeatherHeaderView
     
-    headerView = header
     return header
   }
 }
@@ -88,18 +89,11 @@ extension LocationWeatherCollectionView: UICollectionViewDelegateFlowLayout {
   
   // ScrollView Delegate
   // FIXME: - 상단 애니메이션 고민해보자
-  // 변수1 : layoutSubView 메소드는 계속 호출되서 계속 고정시켜주니까 안될 경우 -> 확인해봄.
-  // 변수2 : HeaderView 의 size 를 고정시켜놓고 레이아웃을 바꾸려고 하니까 안되는 경우
-  /*
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     // 아랫쪽으로 보려고 위로 슬라이드 해서 스크롤 내리면 y + 로 커짐
     print("Content Offset : \(scrollView.contentOffset)")
     
-    guard let headerView = headerView else {
-      return logger("header view is nil")
-    }
-    headerView.currentWeatherViewHeightConstraint.constant = headerView.currentWeatherViewHeightConstraint.constant - scrollView.contentOffset.y
-    headerView.layoutIfNeeded()
   }
- */
+ 
+ 
 }

@@ -119,6 +119,15 @@
 			path = FirstCollectionCell;
 			sourceTree = "<group>";
 		};
+		8E77129F22F8136300B763DF /* ThirdCollectionCell */ = {
+			isa = PBXGroup;
+			children = (
+				8E77127222F575A000B763DF /* ThirdCollectionCell.swift */,
+				8E77128722F6C0FF00B763DF /* SubInfoCollectionCell.swift */,
+			);
+			path = ThirdCollectionCell;
+			sourceTree = "<group>";
+		};
 		8E9F6DE422F3DA1000DB9869 /* LocationWeatherCollectionView */ = {
 			isa = PBXGroup;
 			children = (
@@ -126,8 +135,7 @@
 				8E77127622F5814900B763DF /* LocationWeatherHeaderView */,
 				8E77128622F6AC7A00B763DF /* FirstCollectionCell */,
 				8E77127022F5759700B763DF /* SecondCollectionCell.swift */,
-				8E77127222F575A000B763DF /* ThirdCollectionCell.swift */,
-				8E77128722F6C0FF00B763DF /* SubInfoCollectionCell.swift */,
+				8E77129F22F8136300B763DF /* ThirdCollectionCell */,
 			);
 			path = LocationWeatherCollectionView;
 			sourceTree = "<group>";
