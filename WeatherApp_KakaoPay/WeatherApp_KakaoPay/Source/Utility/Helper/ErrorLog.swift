@@ -13,4 +13,5 @@ public enum ErrorLog {
   static let coderInit = "init(coder:) has not been implemented"
   static let unwrap = "Can't be unwrapped"
   static let weakRef = "Weak Reference Error"
+  static let json = "Json Parsing Error"
 }
