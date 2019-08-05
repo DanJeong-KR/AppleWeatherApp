@@ -103,7 +103,6 @@
 			isa = PBXGroup;
 			children = (
 				8E77126C22F567D400B763DF /* LocationWeatherHeaderView.swift */,
-				8E9F6DCF22F3D2FC00DB9869 /* CurrentLocationWeatherView.swift */,
 				8E77127422F5783C00B763DF /* HourlyCollectionView.swift */,
 				8E77128022F5B84C00B763DF /* HourlyCollectionCell.swift */,
 			);
@@ -131,6 +130,7 @@
 		8E9F6DE422F3DA1000DB9869 /* LocationWeatherCollectionView */ = {
 			isa = PBXGroup;
 			children = (
+				8E9F6DCF22F3D2FC00DB9869 /* CurrentLocationWeatherView.swift */,
 				8E77127922F59CD300B763DF /* LocationWeatherCollectionView.swift */,
 				8E77127622F5814900B763DF /* LocationWeatherHeaderView */,
 				8E77128622F6AC7A00B763DF /* FirstCollectionCell */,

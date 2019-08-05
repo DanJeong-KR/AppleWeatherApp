@@ -11,6 +11,13 @@ class WeatherCollectionCell: UICollectionViewCell {
   
   
   // MARK: - Properties
+  
+  private lazy var currentLocationWeatherView: CurrentLocationWeatherView = {
+    let clwv = CurrentLocationWeatherView(frame: .zero)
+    addSubview(clwv)
+    return clwv
+  }()
+  
   private lazy var locationWeatherCollectionView: LocationWeatherCollectionView = {
     // layout
     let layout = UICollectionViewFlowLayout()
@@ -18,7 +25,7 @@ class WeatherCollectionCell: UICollectionViewCell {
     layout.minimumLineSpacing = 0
     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     layout.headerReferenceSize = CGSize(width: ScreenBounds.width,
-                                        height: ScreenBounds.height * 0.55)
+                                        height: ScreenBounds.height * 0.15)
     //layout.sectionHeadersPinToVisibleBounds = true
     // init
     let cv = LocationWeatherCollectionView(frame: .zero, collectionViewLayout: layout)
@@ -44,6 +51,7 @@ class WeatherCollectionCell: UICollectionViewCell {
   }
   
   private func makeConstraints() {
-    locationWeatherCollectionView.layout.top().leading().trailing().bottom()
+    currentLocationWeatherView.layout.top().leading().trailing().height(constant: ScreenBounds.height * 0.40)
+    locationWeatherCollectionView.layout.top(equalTo: currentLocationWeatherView.bottomAnchor).leading().trailing().bottom()
   }
 }

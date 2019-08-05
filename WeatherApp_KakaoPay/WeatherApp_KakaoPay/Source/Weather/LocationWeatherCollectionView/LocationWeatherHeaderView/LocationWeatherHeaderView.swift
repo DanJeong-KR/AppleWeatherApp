@@ -11,13 +11,6 @@ import UIKit
 class LocationWeatherHeaderView: UICollectionReusableView {
   
   // MARK: - Properties
-  private lazy var currentWeatherView: CurrentLocationWeatherView = {
-    let tv = CurrentLocationWeatherView(frame: .zero)
-    
-    addSubview(tv)
-    return tv
-  }()
-  
   private lazy var hourlyCollectionView: HourlyCollectionView = {
     
     let layout = UICollectionViewFlowLayout()
@@ -58,16 +51,9 @@ class LocationWeatherHeaderView: UICollectionReusableView {
   
   internal var currentWeatherViewHeightConstraint: NSLayoutConstraint!
   private func makeConstraints() {
-    // currentWeatherView
-    currentWeatherView.layout.top().leading().trailing()
-    currentWeatherViewHeightConstraint = currentWeatherView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.75)
-    currentWeatherViewHeightConstraint?.isActive = true
-    
-    // 구분선
-    firstSeparateLineView.makeConstraints(atBottom: currentWeatherView.bottomAnchor)
     
     // hourlyCollectionView
-    hourlyCollectionView.layout.leading().trailing().bottom().height(equalTo: self.heightAnchor, multiplier: 0.25)
+    hourlyCollectionView.layout.top().leading().trailing().bottom()
     
     // 구분선
     secondSeparateLineView.makeConstraints(atBottom: hourlyCollectionView.bottomAnchor)

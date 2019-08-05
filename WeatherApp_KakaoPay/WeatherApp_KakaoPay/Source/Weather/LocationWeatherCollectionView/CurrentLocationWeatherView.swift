@@ -82,6 +82,11 @@ class CurrentLocationWeatherView: UIView {
     return lb
   }()
   
+  private lazy var separateLineView: SeparateLineView = {
+    let slv = SeparateLineView(frame: .zero)
+    addSubview(slv)
+    return slv
+  }()
   
   // MARK: - Initializers
   override init(frame: CGRect) {
@@ -109,6 +114,8 @@ class CurrentLocationWeatherView: UIView {
     todayLabel.layout.leading(equalTo: dayLabel.trailingAnchor, constant: 10).bottom(constant: -10)
     
     tempStackView.layout.trailing(constant: -10).bottom(constant: -10)
+    
+     separateLineView.makeConstraints(atBottom: self.bottomAnchor)
   }
 }
 
