@@ -27,7 +27,7 @@ public extension UIView {
       topAnchor.constraint(equalTo: anchor, constant: c).isActive = true
       return self
     } else {
-      logger("\(ErrorLog.layout.message) : superview is nil")
+      logger("\(ErrorLog.layout) : superview is nil")
       fatalError()
     }
   }
@@ -38,7 +38,7 @@ public extension UIView {
       leadingAnchor.constraint(equalTo: anchor, constant: c).isActive = true
       return self
     } else {
-      logger("\(ErrorLog.layout.message) : superview is nil")
+      logger("\(ErrorLog.layout) : superview is nil")
       fatalError()
     }
   }
@@ -49,7 +49,7 @@ public extension UIView {
       bottomAnchor.constraint(equalTo: anchor, constant: c).isActive = true
       return self
     } else {
-      logger("\(ErrorLog.layout.message) : superview is nil")
+      logger("\(ErrorLog.layout) : superview is nil")
       fatalError()
     }
   }
@@ -60,7 +60,7 @@ public extension UIView {
       trailingAnchor.constraint(equalTo: anchor, constant: c).isActive = true
       return self
     } else {
-      logger("\(ErrorLog.layout.message) : superview is nil")
+      logger("\(ErrorLog.layout) : superview is nil")
       fatalError()
     }
   }
@@ -71,7 +71,7 @@ public extension UIView {
       centerYAnchor.constraint(equalTo: anchor, constant: c).isActive = true
       return self
     } else {
-      logger("\(ErrorLog.layout.message) : superview is nil")
+      logger("\(ErrorLog.layout) : superview is nil")
       fatalError()
     }
   }
@@ -82,7 +82,7 @@ public extension UIView {
       centerXAnchor.constraint(equalTo: anchor, constant: c).isActive = true
       return self
     } else {
-      logger("\(ErrorLog.layout.message) : superview is nil")
+      logger("\(ErrorLog.layout) : superview is nil")
       fatalError()
     }
   }
@@ -99,7 +99,7 @@ public extension UIView {
       }
       return self
     } else {
-      logger("\(ErrorLog.layout.message) : superview is nil")
+      logger("\(ErrorLog.layout) : superview is nil")
       fatalError()
     }
   }
@@ -115,7 +115,7 @@ public extension UIView {
       }
       return self
     } else {
-      logger("\(ErrorLog.layout.message) : superview is nil")
+      logger("\(ErrorLog.layout) : superview is nil")
       fatalError()
     }
   }
@@ -127,7 +127,7 @@ public extension UIView {
       topAnchor.constraint(equalTo: superview.topAnchor).isActive = true
       bottomAnchor.constraint(equalTo: superview.bottomAnchor).isActive = true
     } else {
-      logger("\(ErrorLog.layout.message) : superview is nil")
+      logger("\(ErrorLog.layout) : superview is nil")
       fatalError()
     }
   }

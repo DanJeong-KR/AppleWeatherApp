@@ -38,7 +38,7 @@ class HourlyCollectionCell: UICollectionViewCell {
   
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
-    fatalError(ErrorLog.coderInit.message)
+    fatalError(ErrorLog.coderInit)
   }
   
   override init(frame: CGRect) {

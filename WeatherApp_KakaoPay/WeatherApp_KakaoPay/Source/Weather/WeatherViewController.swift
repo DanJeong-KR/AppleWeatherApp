@@ -11,6 +11,13 @@ import UIKit
 final class WeatherViewController: UIViewController {
   // MARK: - Properties
   
+  private let weatherService: WeatherServiceType = WeatherService()
+  private var weather: Weather? {
+    didSet {
+      print("weather : ",self.weather ?? "weather 비어있음")
+    }
+  }
+  
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
@@ -57,6 +64,18 @@ final class WeatherViewController: UIViewController {
     // Do any additional setup after loading the view.
     view.addSubview(backgroundImageView)
     makeConstraints()
+    
+    //test
+    weatherService.fetchWeather(latitude: 37.11776, longitude: 127.09776) {
+      [weak self] result in
+      guard let self = self else {return logger(ErrorLog.weakRef)}
+      switch result {
+      case .success(let value):
+        self.weather = value
+      case .failure(let error):
+        logger(error.localizedDescription)
+      }
+    }
   }
   
   // MARK: - AutoLayout

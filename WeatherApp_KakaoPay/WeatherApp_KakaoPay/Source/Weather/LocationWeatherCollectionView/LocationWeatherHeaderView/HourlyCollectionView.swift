@@ -19,7 +19,7 @@ class HourlyCollectionView: UICollectionView {
   
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
-    fatalError(ErrorLog.coderInit.message)
+    fatalError(ErrorLog.coderInit)
   }
   
   // MARK: - configure

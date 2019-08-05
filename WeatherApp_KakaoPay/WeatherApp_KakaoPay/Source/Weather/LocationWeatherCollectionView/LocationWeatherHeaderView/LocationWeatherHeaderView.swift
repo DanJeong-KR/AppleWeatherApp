@@ -53,7 +53,6 @@ class LocationWeatherHeaderView: UICollectionReusableView {
   // MARK: - Layout Methods
   override func layoutSubviews() {
     super.layoutSubviews()
-    print("Haha")
     //makeConstraints()
   }
   

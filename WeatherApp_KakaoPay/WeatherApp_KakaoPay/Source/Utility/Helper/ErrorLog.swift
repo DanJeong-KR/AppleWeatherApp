@@ -8,11 +8,9 @@
 
 import Foundation
 
-public enum ErrorLog: String {
-  case layout = "Layout Error"
-  case coderInit = "init(coder:) has not been implemented"
-  
-  var message: String {
-    return self.rawValue
-  }
+public enum ErrorLog {
+  static let layout = "Layout Error"
+  static let coderInit = "init(coder:) has not been implemented"
+  static let unwrap = "Can't be unwrapped"
+  static let weakRef = "Weak Reference Error"
 }

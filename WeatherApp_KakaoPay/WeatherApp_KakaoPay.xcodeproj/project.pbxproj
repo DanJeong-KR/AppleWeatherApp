@@ -26,6 +26,7 @@
 		8E77129022F6E5F700B763DF /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E77128F22F6E5F700B763DF /* ServiceError.swift */; };
 		8E77129222F6E66900B763DF /* WeatherServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E77129122F6E66900B763DF /* WeatherServiceType.swift */; };
 		8E77129422F6FBC400B763DF /* CurrentWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E77129322F6FBC400B763DF /* CurrentWeather.swift */; };
+		8E77129622F7BEC500B763DF /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E77129522F7BEC500B763DF /* WeatherService.swift */; };
 		8E9F6DC922F3C7F900DB9869 /* ErrorLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9F6DC822F3C7F900DB9869 /* ErrorLog.swift */; };
 		8E9F6DD022F3D2FC00DB9869 /* CurrentLocationWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9F6DCF22F3D2FC00DB9869 /* CurrentLocationWeatherView.swift */; };
 		8E9F6DE722F3DA6200DB9869 /* MyWeatherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9F6DE622F3DA6200DB9869 /* MyWeatherListViewController.swift */; };
@@ -61,6 +62,7 @@
 		8E77128F22F6E5F700B763DF /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
 		8E77129122F6E66900B763DF /* WeatherServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherServiceType.swift; sourceTree = "<group>"; };
 		8E77129322F6FBC400B763DF /* CurrentWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeather.swift; sourceTree = "<group>"; };
+		8E77129522F7BEC500B763DF /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		8E9F6DC822F3C7F900DB9869 /* ErrorLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLog.swift; sourceTree = "<group>"; };
 		8E9F6DCF22F3D2FC00DB9869 /* CurrentLocationWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationWeatherView.swift; sourceTree = "<group>"; };
 		8E9F6DE622F3DA6200DB9869 /* MyWeatherListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWeatherListViewController.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 			children = (
 				8E77128F22F6E5F700B763DF /* ServiceError.swift */,
 				8E77129122F6E66900B763DF /* WeatherServiceType.swift */,
+				8E77129522F7BEC500B763DF /* WeatherService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 				8E77127A22F59CD300B763DF /* LocationWeatherCollectionView.swift in Sources */,
 				8E77126D22F567D400B763DF /* LocationWeatherHeaderView.swift in Sources */,
 				8E77129022F6E5F700B763DF /* ServiceError.swift in Sources */,
+				8E77129622F7BEC500B763DF /* WeatherService.swift in Sources */,
 				8E77128322F67DF200B763DF /* SeparateLineView.swift in Sources */,
 				8E77128522F6871700B763DF /* DailyWeatherCollectionCell.swift in Sources */,
 				8E77129422F6FBC400B763DF /* CurrentWeather.swift in Sources */,
