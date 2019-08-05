@@ -11,7 +11,7 @@ import UIKit
 class LocationWeatherHeaderView: UICollectionReusableView {
   
   // MARK: - Properties
-  private lazy var hourlyCollectionView: HourlyCollectionView = {
+  internal lazy var hourlyCollectionView: HourlyCollectionView = {
     
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
@@ -22,12 +22,7 @@ class LocationWeatherHeaderView: UICollectionReusableView {
     return bcv
   }()
   
-  private lazy var firstSeparateLineView: SeparateLineView = {
-    let slv = SeparateLineView(frame: .zero)
-    addSubview(slv)
-    return slv
-  }()
-  private lazy var secondSeparateLineView: SeparateLineView = {
+  private lazy var separateLineView: SeparateLineView = {
     let slv = SeparateLineView(frame: .zero)
     addSubview(slv)
     return slv
@@ -54,9 +49,8 @@ class LocationWeatherHeaderView: UICollectionReusableView {
     
     // hourlyCollectionView
     hourlyCollectionView.layout.top().leading().trailing().bottom()
-    
     // 구분선
-    secondSeparateLineView.makeConstraints(atBottom: hourlyCollectionView.bottomAnchor)
+    separateLineView.makeConstraints(atBottom: hourlyCollectionView.bottomAnchor)
   }
   
   

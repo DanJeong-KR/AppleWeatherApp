@@ -9,14 +9,40 @@
 import UIKit
 
 final class WeatherViewController: UIViewController {
-  // MARK: - Properties
   
+  // MARK: Networking
   private let weatherService: WeatherServiceType = WeatherService()
   private var weather: Weather? {
     didSet {
-      print("weather : ",self.weather ?? "weather 비어있음")
+      //print("weather : ",self.weather ?? "weather 비어있음")
     }
   }
+  
+  private var currently: Currently? {
+    didSet {
+      //print("currently 값 들어옴 / \(self.currently)")
+      weatherCollectionView.reloadData()
+      
+    }
+  }
+  
+  private var hourly: [Hourly]? {
+    didSet {
+      //print("hourly 값 들어옴 / \(self.hourly)")
+      weatherCollectionView.reloadData()
+    }
+  }
+  
+  private var daily: [Daily]? {
+    didSet {
+      print("daily 값 들어옴 / \(self.daily)")
+      weatherCollectionView.reloadData()
+    }
+  }
+  
+  // MARK: - Properties
+  
+  let subInfoTitles = ["일출", "일몰", "비 올 확률", "습도", "바람", "체감", "강수량", "기압", "가시거리", "자외선 지수"]
   
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
@@ -65,13 +91,36 @@ final class WeatherViewController: UIViewController {
     view.addSubview(backgroundImageView)
     makeConstraints()
     
+    
     //test
-    weatherService.fetchWeather(latitude: 37.11776, longitude: 127.09776) {
+    weatherService.fetchCurrentlyData(latitude: 37.54335, longitude: 127.06062) {
       [weak self] result in
-      guard let self = self else {return logger(ErrorLog.weakRef)}
+      guard let self = self else { return logger(ErrorLog.weakRef) }
       switch result {
       case .success(let value):
-        self.weather = value
+        self.currently = value
+      case .failure(let error):
+        logger(error.localizedDescription)
+      }
+    }
+    
+    weatherService.fetchHourlyData(latitude: 37.54335, longitude: 127.06062) {
+      [weak self] result in
+      guard let self = self else { return logger(ErrorLog.weakRef) }
+      switch result {
+      case .success(let value):
+        self.hourly = value
+      case .failure(let error):
+        logger(error.localizedDescription)
+      }
+    }
+    
+    weatherService.fetchDailyData(latitude: 37.54335, longitude: 127.06062) {
+      [weak self] result in
+      guard let self = self else { return logger(ErrorLog.weakRef) }
+      switch result {
+      case .success(let value):
+        self.daily = value
       case .failure(let error):
         logger(error.localizedDescription)
       }
@@ -97,6 +146,60 @@ extension WeatherViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
     let cell = collectionView.dequeue(WeatherCollectionCell.self, indexPath)
+    if let currently = currently,
+      let daily = daily,
+      let hourly = hourly {
+      // Currently
+      cell.currentLocationWeatherView.configureCurrentWeather(location: "창식동",
+                                                              summary: currently.summary,
+                                                              temperature: currently.temperature,
+                                                              day: currently.time,
+                                                              maxTemperature: daily.first!.temperatureMax,
+                                                              minTemperature: daily.first!.temperatureMin
+      )
+      // Hourly
+      cell.locationWeatherCollectionView.headerDidLoad = {
+        header in
+        header.hourlyCollectionView.hourlyCellDidLoad = {
+          hourlycell, hourlyIndexPath in
+          hourlycell.configureCell(hour: hourly[hourlyIndexPath.item].time,
+                             icon: hourly[hourlyIndexPath.item].icon,
+                             temperature: hourly[hourlyIndexPath.item].temperature)
+        }
+      }
+      
+      // Daily
+      cell.locationWeatherCollectionView.firstCollectionCellDidLoad = {
+        firstCell in
+        firstCell.dailyWeatherCollectionView.dailyWeatherCollectionCellDidLoad = {
+          dailyCell, dailyIndexPath in
+          dailyCell.configureCell(day: daily[dailyIndexPath.item].time,
+                                  icon: daily[dailyIndexPath.item].icon,
+                                  maxTemperature: daily[dailyIndexPath.item].temperatureMax,
+                                  minTemperature: daily[dailyIndexPath.item].temperatureMin)
+        }
+      }
+      
+      // Summary
+      cell.locationWeatherCollectionView.secondCollectionCellDidLoad = {
+        secondCell in
+        secondCell.configureCell(summary: currently.summary,
+                                 temperature: currently.temperature,
+                                 maxTemperature: daily.first!.temperatureMax)
+      }
+      
+      // SubInfo
+      cell.locationWeatherCollectionView.thirdCollectionCellDidLoad = {
+        thirdCell in
+        thirdCell.subInfoCollectionView.subInfoCollectionCellDidLoad = {
+          infoCell, infoIndexPath in
+          infoCell.configureCell(topText: self.subInfoTitles[infoIndexPath.item],
+                                 bottomText: "오전 5:38")
+        }
+      }
+      
+      
+    }
     return cell
   }
   

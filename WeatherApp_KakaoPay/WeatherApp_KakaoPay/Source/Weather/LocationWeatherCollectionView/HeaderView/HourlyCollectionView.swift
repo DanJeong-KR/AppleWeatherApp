@@ -10,6 +10,9 @@ import UIKit
 
 class HourlyCollectionView: UICollectionView {
   
+  // MARK: - CallBack
+  internal var hourlyCellDidLoad: ((HourlyCollectionCell, IndexPath) -> Void)?
+  
   // MARK: - Initializers
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
     super.init(frame: frame, collectionViewLayout: layout)
@@ -34,11 +37,19 @@ class HourlyCollectionView: UICollectionView {
 // MARK: - CollectionView DataSource
 extension HourlyCollectionView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 10
+    return 24
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeue(HourlyCollectionCell.self, indexPath)
+    
+    // Callback
+    if let hourlyCellDidLoad = self.hourlyCellDidLoad {
+      hourlyCellDidLoad(cell, indexPath)
+    } else {
+      logger(ErrorLog.callback)
+    }
+    
     return cell
   }
   

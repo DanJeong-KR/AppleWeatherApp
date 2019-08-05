@@ -65,6 +65,7 @@ class DailyWeatherCollectionCell: UICollectionViewCell {
     super.init(coder: aDecoder)
   }
   
+  // MARK: - Layout Methods
   override func layoutSubviews() {
     super.layoutSubviews()
     makeConstraints()
@@ -76,6 +77,17 @@ class DailyWeatherCollectionCell: UICollectionViewCell {
     tempStackView.layout.centerY().trailing(constant: WeatherLayout.rightPadding)
   }
   
-  
+  // MARK: - Configure Cell
+  internal func configureCell(
+    day: Double,
+    icon: String,
+    maxTemperature: Double,
+    minTemperature: Double
+    ) {
+    self.dayLabel.text = day.getWeekDayToString()
+    self.weatherIconImageView.image = UIImage(named: icon)
+    self.maxTempLabel.text = maxTemperature.convertToCelsiusIntoString()
+    self.minTempLabel.text = minTemperature.convertToCelsiusIntoString()
+  }
 }
 

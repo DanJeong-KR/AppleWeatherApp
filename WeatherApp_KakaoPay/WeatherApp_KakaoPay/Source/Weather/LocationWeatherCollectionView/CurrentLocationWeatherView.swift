@@ -20,7 +20,7 @@ class CurrentLocationWeatherView: UIView {
     return lb
   }()
   
-  private lazy var outLineLabel: UILabel = {
+  private lazy var summaryLabel: UILabel = {
     let lb = UILabel(frame: .zero)
     lb.text = "청명함"
     lb.font = UIFont.systemFont(ofSize: 17, weight: .regular)
@@ -107,8 +107,8 @@ class CurrentLocationWeatherView: UIView {
   
   private func makeConstraints() {
     locationLabel.layout.centerX().top(constant: ScreenBounds.height * 0.1)
-    outLineLabel.layout.centerX().top(equalTo: locationLabel.bottomAnchor, constant: 5)
-    temperatureLabel.layout.centerX().top(equalTo: outLineLabel.bottomAnchor, constant: 5)
+    summaryLabel.layout.centerX().top(equalTo: locationLabel.bottomAnchor, constant: 5)
+    temperatureLabel.layout.centerX().top(equalTo: summaryLabel.bottomAnchor, constant: 5)
     
     dayLabel.layout.leading(constant: 10).bottom(constant: -10)
     todayLabel.layout.leading(equalTo: dayLabel.trailingAnchor, constant: 10).bottom(constant: -10)
@@ -117,6 +117,21 @@ class CurrentLocationWeatherView: UIView {
     
      separateLineView.makeConstraints(atBottom: self.bottomAnchor)
   }
+  
+  internal func configureCurrentWeather(
+    location: String,
+    summary: String,
+    temperature: Double,
+    day: Double, // 요일
+    maxTemperature: Double,
+    minTemperature: Double
+    ) {
+    locationLabel.text = location
+    summaryLabel.text = summary
+    temperatureLabel.text = temperature.convertToCelsiusIntoString() + "°"
+    dayLabel.text = day.getWeekDayToString() ?? "Error"
+    maxTempLabel.text = maxTemperature.convertToCelsiusIntoString()
+    minTempLabel.text = minTemperature.convertToCelsiusIntoString()
+  }
 }
-
 

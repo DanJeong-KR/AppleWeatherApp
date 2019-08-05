@@ -10,9 +10,11 @@ import UIKit
 
 class LocationWeatherCollectionView: UICollectionView {
   
-  // MARK: Networking
-  private let weatherService: WeatherServiceType = WeatherService()
-  var currently: Currently?
+  // MARK: - Callback
+  internal var headerDidLoad: ((LocationWeatherHeaderView) -> Void)?
+  internal var firstCollectionCellDidLoad: ((FirstCollectionCell) -> Void)?
+  internal var secondCollectionCellDidLoad: ((SecondCollectionCell) -> Void)?
+  internal var thirdCollectionCellDidLoad: ((ThirdCollectionCell) -> Void)?
   
   // MARK: - Initializers
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
@@ -37,6 +39,7 @@ class LocationWeatherCollectionView: UICollectionView {
     // configure
     backgroundColor = .clear
     showsVerticalScrollIndicator = false
+    
   }
   
 }
@@ -48,24 +51,47 @@ extension LocationWeatherCollectionView: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    var cell = UICollectionViewCell()
     switch indexPath.item {
     case 0:
-      cell = collectionView.dequeue(FirstCollectionCell.self, indexPath)
+      let cell = collectionView.dequeue(FirstCollectionCell.self, indexPath)
+      if let firstCollectionCellDidLoad  = firstCollectionCellDidLoad {
+        firstCollectionCellDidLoad(cell)
+      } else {
+        logger(ErrorLog.callback)
+      }
+      return cell
     case 1:
-      cell = collectionView.dequeue(SecondCollectionCell.self, indexPath)
+      let cell = collectionView.dequeue(SecondCollectionCell.self, indexPath)
+      if let secondCollectionCellDidLoad  = secondCollectionCellDidLoad {
+        secondCollectionCellDidLoad(cell)
+      } else {
+        logger(ErrorLog.callback)
+      }
+      return cell
     case 2:
-      cell = collectionView.dequeue(ThirdCollectionCell.self, indexPath)
+      let cell = collectionView.dequeue(ThirdCollectionCell.self, indexPath)
+      if let thirdCollectionCellDidLoad  = thirdCollectionCellDidLoad {
+        thirdCollectionCellDidLoad(cell)
+      } else {
+        logger(ErrorLog.callback)
+      }
+      return cell
     default:
       break
     }
     
-    return cell
+    logger("Invalid return Cell")
+    return UICollectionViewCell()
   }
   
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LocationWeatherHeaderView.identifier, for: indexPath) as! LocationWeatherHeaderView
     
+    if let headerDidLoad = headerDidLoad {
+      headerDidLoad(header)
+    } else {
+      logger(ErrorLog.callback)
+    }
     return header
   }
 }
@@ -91,7 +117,7 @@ extension LocationWeatherCollectionView: UICollectionViewDelegateFlowLayout {
   // FIXME: - 상단 애니메이션 고민해보자
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     // 아랫쪽으로 보려고 위로 슬라이드 해서 스크롤 내리면 y + 로 커짐
-    print("Content Offset : \(scrollView.contentOffset)")
+    //print("Content Offset : \(scrollView.contentOffset)")
     
   }
  

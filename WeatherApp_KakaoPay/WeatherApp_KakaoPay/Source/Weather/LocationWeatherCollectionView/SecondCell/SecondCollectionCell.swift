@@ -48,4 +48,13 @@ class SecondCollectionCell: UICollectionViewCell {
     descriptionLabel.layout.leading(constant: WeatherLayout.leftPadding).trailing(constant: WeatherLayout.rightPadding).centerX().centerY()
     separateLineView.makeConstraints(atBottom: self.bottomAnchor)
   }
+  
+  // MARK: - Configure Cell
+  internal func configureCell(
+    summary: String,
+    temperature: Double,
+    maxTemperature: Double
+    ) {
+    self.descriptionLabel.text = "오늘 : \(summary), 현재 기온은 \(temperature.convertToCelsiusIntoString())°이며 최고 기온은 \(maxTemperature.convertToCelsiusIntoString())°입니다."
+  }
 }

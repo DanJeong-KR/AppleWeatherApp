@@ -10,6 +10,7 @@ import UIKit
 
 class SubInfoCollectionCell: UICollectionViewCell {
   
+  // MARK: - Properties
   private lazy var topLabel: UILabel = {
     let lb = UILabel(frame: .zero)
     lb.text = "일출"
@@ -44,6 +45,7 @@ class SubInfoCollectionCell: UICollectionViewCell {
     super.init(coder: aDecoder)
   }
   
+  // MARK: - Layout Methods
   override func layoutSubviews() {
     super.layoutSubviews()
     makeConstaints()
@@ -53,6 +55,15 @@ class SubInfoCollectionCell: UICollectionViewCell {
     topLabel.layout.top(constant: 5).leading()
     bottomLabel.layout.bottom(constant: -5).leading()
     separateLineView.makeConstraints(atBottom: self.bottomAnchor)
+  }
+  
+  // MARK: - Configure Cell
+  internal func configureCell(
+    topText: String,
+    bottomText: String
+    ) {
+    self.topLabel.text = topText
+    self.bottomLabel.text = bottomText
   }
   
 }

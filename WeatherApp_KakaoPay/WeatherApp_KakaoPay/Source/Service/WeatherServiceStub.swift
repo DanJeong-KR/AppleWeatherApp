@@ -8,13 +8,13 @@
 
 import Foundation
 
-class WeatherServiceStub: WeatherServiceType {
-  
-  func fetchWeather(latitude: Double, longitude: Double, completionHandler: @escaping (Result<Weather, ServiceError>) -> Void) {
-    let data = SampleData.forecast
-    let weather = try! JSONDecoder().decode(Weather.self, from: data)
-    completionHandler(.success(weather))
-  }
-  
-  
-}
+//class WeatherServiceStub: WeatherServiceType {
+//  
+//  func fetchWeather(latitude: Double, longitude: Double, completionHandler: @escaping (Result<Weather, ServiceError>) -> Void) {
+//    let data = SampleData.forecast
+//    let weather = try! JSONDecoder().decode(Weather.self, from: data)
+//    completionHandler(.success(weather))
+//  }
+//  
+//  
+//}

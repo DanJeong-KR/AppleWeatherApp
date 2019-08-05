@@ -10,6 +10,7 @@ import UIKit
 
 class HourlyCollectionCell: UICollectionViewCell {
   
+  // MARK: - Properties
   private lazy var hourLabel: UILabel = {
     let lb = UILabel(frame: .zero)
     lb.text = "오전 10시"
@@ -36,6 +37,7 @@ class HourlyCollectionCell: UICollectionViewCell {
     return lb
   }()
   
+  // MARK: - Initializers
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     fatalError(ErrorLog.coderInit)
@@ -47,6 +49,7 @@ class HourlyCollectionCell: UICollectionViewCell {
     backgroundColor = .clear
   }
   
+  // MARK: - Layout Methods
   override func layoutSubviews() {
     super.layoutSubviews()
   }
@@ -55,5 +58,16 @@ class HourlyCollectionCell: UICollectionViewCell {
     hourLabel.layout.centerX().top(equalTo: self.topAnchor, constant: self.frame.height * 0.05)
     weatherIconImageView.layout.centerX().top(equalTo: self.topAnchor, constant: self.frame.height * 0.4).setImageSize(with: 30)
     tempLabel.layout.centerX().top(equalTo: self.topAnchor, constant: self.frame.height * 0.7)
+  }
+  
+  // MARK: - Configure Cell
+  internal func configureCell(
+    hour: Double,
+    icon: String,
+    temperature: Double
+    ) {
+    self.hourLabel.text = hour.getHourToString() + "시"
+    self.weatherIconImageView.image = UIImage(named: icon)
+    self.tempLabel.text = temperature.convertToCelsiusIntoString()
   }
 }

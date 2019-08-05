@@ -56,6 +56,7 @@ final class WeatherService: WeatherServiceType {
  
   func fetchWeather(latitude: Double, longitude: Double, completionHandler: @escaping (Result<Weather, ServiceError>) -> Void) {
     
+    /*
     var urlComponent = URLComponents(string: baseURL)
     urlComponent?.path = "/forecast/\(appKey)/\(latitude),\(longitude)"
     urlComponent?.queryItems = [
@@ -116,7 +117,151 @@ final class WeatherService: WeatherServiceType {
       print("sun :",sunsetTime, sunsetTime)
     }
     task.resume()
+ */
   }
- 
+  
+  func fetchCurrentlyData(latitude: Double, longitude: Double, completionHandler: @escaping (Result<Currently, ServiceError>) -> Void) {
+    var urlComponent = URLComponents(string: baseURL)
+    urlComponent?.path = "/forecast/\(appKey)/\(latitude),\(longitude)"
+    urlComponent?.queryItems = [
+      URLQueryItem(name: "lang", value: "ko")
+    ]
+    
+    guard let url = urlComponent?.url else {
+      return logger(ErrorLog.unwrap)
+    }
+    
+    let task = URLSession.shared.dataTask(with: url) {
+      (data, response, error) in
+      
+      guard error == nil else {
+        logger(ServiceError.clientError.localizedDescription)
+        return completionHandler(.failure(.clientError))
+      }
+      guard let header = response as? HTTPURLResponse,
+        (200..<300) ~= header.statusCode else {
+          logger(ServiceError.invalidStatusCode.localizedDescription)
+          return completionHandler(.failure(.invalidStatusCode))
+      }
+      guard let data = data else {
+        logger(ServiceError.noData.localizedDescription)
+        return completionHandler(.failure(.noData))
+      }
+      
+      // JSON Parsing
+      guard let json = try? JSONSerialization.jsonObject(with: data) as? [String : Any],
+        // currently parsing
+        let currently = try? json["currently"] as? [String : Any]
+        else {
+          logger(ErrorLog.json)
+          return completionHandler(.failure(.invalidFormat))
+      }
+      
+      // JSON Parsing Success
+      if let currentlyData = Currently(from: currently) {
+        completionHandler(.success(currentlyData))
+      } else {
+        logger(ErrorLog.unwrap)
+      }
+    }
+    task.resume()
+  }
+  
+  func fetchHourlyData(latitude: Double, longitude: Double, completionHandler: @escaping (Result<[Hourly], ServiceError>) -> Void) {
+    
+    var urlComponent = URLComponents(string: baseURL)
+    urlComponent?.path = "/forecast/\(appKey)/\(latitude),\(longitude)"
+    urlComponent?.queryItems = [
+      URLQueryItem(name: "lang", value: "ko")
+    ]
+    
+    guard let url = urlComponent?.url else {
+      return logger(ErrorLog.unwrap)
+    }
+    
+    let task = URLSession.shared.dataTask(with: url) {
+      (data, response, error) in
+      
+      guard error == nil else {
+        logger(ServiceError.clientError.localizedDescription)
+        return completionHandler(.failure(.clientError))
+      }
+      guard let header = response as? HTTPURLResponse,
+        (200..<300) ~= header.statusCode else {
+          logger(ServiceError.invalidStatusCode.localizedDescription)
+          return completionHandler(.failure(.invalidStatusCode))
+      }
+      guard let data = data else {
+        logger(ServiceError.noData.localizedDescription)
+        return completionHandler(.failure(.noData))
+      }
+      
+      // JSON Parsing
+      guard let json = try? JSONSerialization.jsonObject(with: data) as? [String : Any],
+        // hourly parsing
+        let hourly = try? json["hourly"] as? [String : Any],
+        let hourlyData = try? hourly["data"] as? [[String : Any]]
+        else {
+          logger(ErrorLog.json)
+          return completionHandler(.failure(.invalidFormat))
+      }
+      
+      let hourlyArr = hourlyData.compactMap {
+        Hourly(from: $0)
+      }
+      // Parsing Success
+      completionHandler(.success(hourlyArr))
+    }
+    task.resume()
+  }
+  
+  func fetchDailyData(latitude: Double, longitude: Double, completionHandler: @escaping (Result<[Daily], ServiceError>) -> Void) {
+    
+    var urlComponent = URLComponents(string: baseURL)
+    urlComponent?.path = "/forecast/\(appKey)/\(latitude),\(longitude)"
+    urlComponent?.queryItems = [
+      URLQueryItem(name: "lang", value: "ko")
+    ]
+    
+    guard let url = urlComponent?.url else {
+      return logger(ErrorLog.unwrap)
+    }
+    
+    let task = URLSession.shared.dataTask(with: url) {
+      (data, response, error) in
+      
+      guard error == nil else {
+        logger(ServiceError.clientError.localizedDescription)
+        return completionHandler(.failure(.clientError))
+      }
+      guard let header = response as? HTTPURLResponse,
+        (200..<300) ~= header.statusCode else {
+          logger(ServiceError.invalidStatusCode.localizedDescription)
+          return completionHandler(.failure(.invalidStatusCode))
+      }
+      guard let data = data else {
+        logger(ServiceError.noData.localizedDescription)
+        return completionHandler(.failure(.noData))
+      }
+      
+      // JSON Parsing
+      guard let json = try? JSONSerialization.jsonObject(with: data) as? [String : Any],
+        // daily parsing
+        let daily = try? json["daily"] as? [String : Any],
+        let dailyData = try? daily["data"] as? [[String : Any]]
+        else {
+          logger(ErrorLog.json)
+          return completionHandler(.failure(.invalidFormat))
+      }
+      
+      let dailyArr = dailyData.compactMap {
+        Daily(from: $0)
+      }
+      completionHandler(.success(dailyArr))
+    }
+    task.resume()
+  }
 }
+
+
 

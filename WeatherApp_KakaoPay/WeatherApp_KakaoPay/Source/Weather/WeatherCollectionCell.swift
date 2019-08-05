@@ -9,16 +9,14 @@ import UIKit
 
 class WeatherCollectionCell: UICollectionViewCell {
   
-  
   // MARK: - Properties
-  
-  private lazy var currentLocationWeatherView: CurrentLocationWeatherView = {
+  internal lazy var currentLocationWeatherView: CurrentLocationWeatherView = {
     let clwv = CurrentLocationWeatherView(frame: .zero)
     addSubview(clwv)
     return clwv
   }()
   
-  private lazy var locationWeatherCollectionView: LocationWeatherCollectionView = {
+  internal lazy var locationWeatherCollectionView: LocationWeatherCollectionView = {
     // layout
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .vertical
@@ -26,7 +24,7 @@ class WeatherCollectionCell: UICollectionViewCell {
     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     layout.headerReferenceSize = CGSize(width: ScreenBounds.width,
                                         height: ScreenBounds.height * 0.15)
-    //layout.sectionHeadersPinToVisibleBounds = true
+    layout.sectionHeadersPinToVisibleBounds = true
     // init
     let cv = LocationWeatherCollectionView(frame: .zero, collectionViewLayout: layout)
     
