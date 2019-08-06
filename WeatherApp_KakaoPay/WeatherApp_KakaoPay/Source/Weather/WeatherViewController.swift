@@ -11,10 +11,8 @@ import CoreLocation
 
 final class WeatherViewController: UIViewController {
   
-  // MARK: Networking Properies
-  private let weatherService: WeatherServiceType = WeatherService()
-  
-  // 위치정보와 날씨정보 모두 받을 때 collectionView 를 한번만 reload 시켜줄 의도
+  // MARK: - Observer
+  //위치정보와 날씨정보 모두 받을 때 collectionView 를 한번만 reload 시켜줄 의도
   private var reloadObserver: [String : Bool] = ["weather" : false, "locationInfo" : false, "subInfoValues" : false] {
     didSet {
       if !self.reloadObserver.values.contains(false) {
@@ -27,8 +25,6 @@ final class WeatherViewController: UIViewController {
   
   private var weather: [Weather]? {
     didSet {
-      guard let weather = weather
-         else { return logger(ErrorLog.unwrap) }
       self.subInfoValues = DataManager.shared.getSubInfoValues()
       self.reloadObserver["weather"] = true
     }
