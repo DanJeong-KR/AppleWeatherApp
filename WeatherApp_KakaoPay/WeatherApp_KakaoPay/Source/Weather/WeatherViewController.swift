@@ -15,30 +15,21 @@ final class WeatherViewController: UIViewController {
   private let weatherService: WeatherServiceType = WeatherService()
   
   // 위치정보와 날씨정보 모두 받을 때 collectionView 를 한번만 reload 시켜줄 의도
-  private var reloadObserver: [String : Bool] = ["weather" : false, "locationInfo" : false] {
+  private var reloadObserver: [String : Bool] = ["weather" : false, "locationInfo" : false, "subInfoValues" : false] {
     didSet {
       if !self.reloadObserver.values.contains(false) {
         DispatchQueue.main.async {
-          self.weatherCollectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
+          self.weatherCollectionView.reloadData()
         }
       }
     }
   }
   
-  private var weather: Weather? {
+  private var weather: [Weather]? {
     didSet {
-      guard let subInfo = self.weather?.subInfo else { return logger(ErrorLog.unwrap) }
-      subInfoValues.append(subInfo.sunriseTime.getHourToString(true))
-      subInfoValues.append(subInfo.precipProbability.convertPercentageToStr())
-      subInfoValues.append(subInfo.windSpeed.convertWindFormatToStr())
-      subInfoValues.append(subInfo.precipIntensity.convertMiliToCentiIntoStr())
-      subInfoValues.append(String(Int((subInfo.visibility).rounded(.down))) + "km")
-      subInfoValues.append(subInfo.sunsetTime.getHourToString(true))
-      subInfoValues.append(subInfo.humidity.convertPercentageToStr())
-      subInfoValues.append(subInfo.apparentTemperature.convertToCelsiusIntoString() + "°")
-      subInfoValues.append(String(Int((subInfo.pressure).rounded(.down))) + "hPa")
-      subInfoValues.append(String(Int(subInfo.uvIndex)))
-      
+      guard let weather = weather
+         else { return logger(ErrorLog.unwrap) }
+      self.subInfoValues = DataManager.shared.getSubInfoValues()
       self.reloadObserver["weather"] = true
     }
   }
@@ -50,7 +41,11 @@ final class WeatherViewController: UIViewController {
   }
   
   internal var subInfoTitles = ["일출", "비 올 확률", "바람", "강수량", "가시거리", "일몰", "습도", "체감", "기압", "자외선 지수"]
-  internal var subInfoValues: [String] = []
+  internal var subInfoValues: [[String]] = [] {
+    didSet {
+      self.reloadObserver["subInfoValues"] = true
+    }
+  }
   
   // MARK: - Location Properties
   private let locationManager = CLLocationManager()
@@ -172,18 +167,18 @@ final class WeatherViewController: UIViewController {
 // MARK: - Collection DataSource
 extension WeatherViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 3
+    return weather?.count ?? 0
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
     let cell = collectionView.dequeue(WeatherCollectionCell.self, indexPath)
     if let weather = weather,
-      let dailyFirst = weather.daily.first{
+      let dailyFirst = weather[indexPath.row].daily.first{
       
-      let currently = weather.currently
-      let hourly = weather.hourly
-      let daily = weather.daily
+      let currently = weather[indexPath.row].currently
+      let hourly = weather[indexPath.row].hourly
+      let daily = weather[indexPath.row].daily
       //let locationInfo = weather.locationInfo
       // Currently
       cell.currentLocationWeatherView.configureCurrentWeather(location: locationInfo ?? "",
@@ -232,7 +227,7 @@ extension WeatherViewController: UICollectionViewDataSource {
           [weak self] infoCell, infoIndexPath in // 클로저 안에서 self 참조하면 Retain Cycle Issue 가능성
           guard let self = self else { return logger(ErrorLog.retainCycle) }
           infoCell.configureCell(topText: self.subInfoTitles[infoIndexPath.item],
-                                 bottomText: self.subInfoValues[infoIndexPath.item])
+                                 bottomText: self.subInfoValues[indexPath.item][infoIndexPath.item])
         }
       }
       cell.locationWeatherCollectionView.reloadData()
@@ -289,8 +284,10 @@ extension WeatherViewController: CLLocationManagerDelegate {
       reverseGeocoding(location: location)
       
       // location 정보를 통해 네트워크로 날씨정보 가져오기
-      fetchWeather(from: location)
-      
+//      fetchWeather(from: location)
+      DataManager.shared.fetchCurrentWeather(from: location) {
+        self.weather = DataManager.shared.getWeather()
+      }
       lastRequestDate = currentDate
     }
   }
@@ -318,22 +315,5 @@ extension WeatherViewController: CLLocationManagerDelegate {
     }
   }
   
-  
-  private func fetchWeather(from location: CLLocation) {
-    weatherService.fetchWeatherData(latitude: location.coordinate.latitude,
-                                      longitude: location.coordinate.longitude) {
-      [weak self] result in
-      guard let `self` = self else { return logger(ErrorLog.retainCycle) }
-      
-      DispatchQueue.main.async {
-        switch result {
-        case .success(let weather):
-          self.weather = weather
-        case .failure(let error):
-          print(error.localizedDescription)
-        }
-      }
-    }
-  }
   
 }

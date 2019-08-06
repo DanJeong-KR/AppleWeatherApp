@@ -9,16 +9,16 @@
 import Foundation
 
 struct SubInfo {
-  let sunriseTime: Double // 일출
-  let sunsetTime: Double // 일몰
-  let apparentTemperature: Double // 체감
-  let precipProbability: Double // 강수확률
-  let humidity: Double // 습도
-  let windSpeed: Double // miles/s 풍속
-  let precipIntensity: Double // mm 강수량
-  let pressure: Double // hPa 기압
-  let visibility: Double // km 가시거리
-  let uvIndex: Double // 자외선지수
+  let sunriseTime: String // 일출
+  let sunsetTime: String // 일몰
+  let apparentTemperature: String // 체감
+  let precipProbability: String // 강수확률
+  let humidity: String // 습도
+  let windSpeed: String // miles/s 풍속
+  let precipIntensity: String // mm 강수량
+  let pressure: String // hPa 기압
+  let visibility: String // km 가시거리
+  let uvIndex: String // 자외선지수
   
   init?(from json: [String : Any]) {
     guard let sunriseTime = json["sunriseTime"] as? Double,
@@ -35,15 +35,16 @@ struct SubInfo {
         logger(ErrorLog.json)
         return nil
     }
-    self.sunriseTime = sunriseTime
-    self.sunsetTime = sunsetTime
-    self.apparentTemperature = apparentTemperature
-    self.precipProbability = precipProbability
-    self.humidity = humidity
-    self.windSpeed = windSpeed
-    self.precipIntensity = precipIntensity
-    self.pressure = pressure
-    self.visibility = visibility
-    self.uvIndex = uvIndex
+    self.sunriseTime = sunriseTime.getHourToString(true)
+    self.sunsetTime = sunsetTime.getHourToString(true)
+    self.apparentTemperature = apparentTemperature.convertToCelsiusIntoString() + "°"
+    self.precipProbability = precipProbability.convertPercentageToStr()
+    self.humidity = humidity.convertPercentageToStr()
+    self.windSpeed = windSpeed.convertWindFormatToStr()
+    self.precipIntensity = precipIntensity.convertMiliToCentiIntoStr()
+    self.pressure = String(Int((pressure).rounded(.down))) + "hPa"
+    self.visibility = String(Int((visibility).rounded(.down))) + "km"
+    self.uvIndex = String(Int(uvIndex))
   }
 }
+
