@@ -13,16 +13,23 @@ final class WeatherViewController: UIViewController {
   
   // MARK: Networking Properies
   private let weatherService: WeatherServiceType = WeatherService()
-  private var weather: Weather? {
+  private var weather: Weather?
+  
+  private var locationInfo: String? {
     didSet {
-      //print("weather : ",self.weather ?? "weather 비어있음")
+      print("locationInfo 값 들어옴 \(self.locationInfo)")
+      DispatchQueue.main.async {
+        self.weatherCollectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
+      }
     }
   }
   
   private var currently: Currently? {
     didSet {
-      //print("currently 값 들어옴 / \(self.currently)")
-      //weatherCollectionView.reloadData()
+      print("currently 값 들어옴 / \(self.currently)")
+      DispatchQueue.main.async {
+        self.weatherCollectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
+      }
       
     }
   }
@@ -33,14 +40,18 @@ final class WeatherViewController: UIViewController {
       self.hourly!.forEach {
         print($0)
       }
-      //weatherCollectionView.reloadData()
+      DispatchQueue.main.async {
+        self.weatherCollectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
+      }
     }
   }
   
   private var daily: [Daily]? {
     didSet {
-      //print("daily 값 들어옴 / \(self.daily)")
-      //weatherCollectionView.reloadData()
+      print("daily 값 들어옴 / \(self.daily)")
+      DispatchQueue.main.async {
+        self.weatherCollectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
+      }
     }
   }
   
@@ -161,16 +172,16 @@ final class WeatherViewController: UIViewController {
   // MARK: - Networking Service
   private func serviceTest() {
     //test
-    weatherService.fetchCurrentlyData(latitude: 37.54335, longitude: 127.06062) {
-      [weak self] result in
-      guard let self = self else { return logger(ErrorLog.retainCycle) }
-      switch result {
-      case .success(let value):
-        self.currently = value
-      case .failure(let error):
-        logger(error.localizedDescription)
-      }
-    }
+//    weatherService.fetchCurrentlyData(latitude: 37.54335, longitude: 127.06062) {
+//      [weak self] result in
+//      guard let self = self else { return logger(ErrorLog.retainCycle) }
+//      switch result {
+//      case .success(let value):
+//        self.currently = value
+//      case .failure(let error):
+//        logger(error.localizedDescription)
+//      }
+//    }
     
     weatherService.fetchHourlyData(latitude: 37.54335, longitude: 127.06062) {
       [weak self] result in
@@ -230,7 +241,7 @@ extension WeatherViewController: UICollectionViewDataSource {
       let hourly = hourly {
       
       // Currently
-      cell.currentLocationWeatherView.configureCurrentWeather(location: "창식동",
+      cell.currentLocationWeatherView.configureCurrentWeather(location: locationInfo ?? "",
                                                               summary: currently.summary,
                                                               temperature: currently.temperature,
                                                               day: currently.time,
@@ -330,10 +341,7 @@ extension WeatherViewController: CLLocationManagerDelegate {
     // 최초 정보와 시간 차가 2초 이상 날 때만 데이터 업데이트 시킬 생각
     if abs(lastRequestDate.timeIntervalSince(currentDate)) > 2 {
       reverseGeocoding(location: location)
-//      fetchCurrentForecast(lat: location.coordinate.latitude,
-//                           lon: location.coordinate.longitude)
-//      fetchShortRangeForecast(lat: location.coordinate.latitude,
-//                              lon: location.coordinate.longitude)
+      fetchCurrently(from: location)
       lastRequestDate = currentDate
     }
   }
@@ -355,6 +363,27 @@ extension WeatherViewController: CLLocationManagerDelegate {
       print("locality : \(locality)")
       print("sublocality : \(subLocality)")
       print("thoroughfare : \(thoroughfare)")
+      print("address : \(address)")
+      
+      self.locationInfo = locality
+    }
+  }
+  
+  private func fetchCurrently(from location: CLLocation) {
+    
+    weatherService.fetchCurrentlyData(latitude: location.coordinate.latitude,
+                                      longitude: location.coordinate.longitude) {
+      [weak self] result in
+      guard let `self` = self else { return logger(ErrorLog.retainCycle) }
+      
+      DispatchQueue.main.async {
+        switch result {
+        case .success(let currently):
+          self.currently = currently
+        case .failure(let error):
+          print(error.localizedDescription)
+        }
+      }
     }
   }
 }
