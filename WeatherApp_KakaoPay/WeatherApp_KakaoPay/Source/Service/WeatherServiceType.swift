@@ -10,28 +10,34 @@ import Foundation
 
 protocol WeatherServiceType {
   
-  func fetchCurrentlyData(
+  func fetchWeatherData(
     latitude: Double,
     longitude: Double,
-    completionHandler: @escaping (Result<Currently, ServiceError>) -> Void
+    completionHandler: @escaping (Result<Weather, ServiceError>) -> Void
   )
   
-  func fetchHourlyData(
-    latitude: Double,
-    longitude: Double,
-    completionHandler: @escaping (Result<[Hourly], ServiceError>) -> Void
-  )
-  
-  func fetchDailyData(
-    latitude: Double,
-    longitude: Double,
-    completionHandler: @escaping (Result<[Daily], ServiceError>) -> Void
-  )
-  
-  func fetchSubInfoData(
-    latitude: Double,
-    longitude: Double,
-    completionHandler: @escaping (Result<SubInfo, ServiceError>) -> Void
-  )
+//  func fetchCurrentlyData(
+//    latitude: Double,
+//    longitude: Double,
+//    completionHandler: @escaping (Result<Currently, ServiceError>) -> Void
+//  )
+//  
+//  func fetchHourlyData(
+//    latitude: Double,
+//    longitude: Double,
+//    completionHandler: @escaping (Result<[Hourly], ServiceError>) -> Void
+//  )
+//  
+//  func fetchDailyData(
+//    latitude: Double,
+//    longitude: Double,
+//    completionHandler: @escaping (Result<[Daily], ServiceError>) -> Void
+//  )
+//  
+//  func fetchSubInfoData(
+//    latitude: Double,
+//    longitude: Double,
+//    completionHandler: @escaping (Result<SubInfo, ServiceError>) -> Void
+//  )
   
 }

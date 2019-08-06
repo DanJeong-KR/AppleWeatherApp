@@ -8,14 +8,6 @@
 
 import UIKit
 
-struct Weather {
-  let locationInfo: String
-  let currently: Currently
-  let hourly: [Hourly]
-  let daily: [Daily]
-  let subInfo: [SubInfo]
-}
-
 final class DataManager {
   static let shared = DataManager()
   private init() { }

@@ -14,56 +14,20 @@ final class WeatherViewController: UIViewController {
   // MARK: Networking Properies
   private let weatherService: WeatherServiceType = WeatherService()
   
-  // reload Observer를 두고 필요한 데이터 받았을 때 CollectionView 1번만 reload 시켜준다.
-  private var reloadObserver: [String : Bool] = ["locationInfo" : false,
-                                                 "currently" : false,
-                                                 "hourly" : false,
-                                                 "daily" : false,
-                                                 "subInfo" : false]
-    {
+  // 위치정보와 날씨정보 모두 받을 때 collectionView 를 한번만 reload 시켜줄 의도
+  private var reloadObserver: [String : Bool] = ["weather" : false, "locationInfo" : false] {
     didSet {
-      DispatchQueue.main.async {
-        if !self.reloadObserver.values.contains(false) {
+      if !self.reloadObserver.values.contains(false) {
+        DispatchQueue.main.async {
           self.weatherCollectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
         }
       }
     }
   }
   
-  private var locationInfo: String? {
+  private var weather: Weather? {
     didSet {
-      //print("locationInfo 값 들어옴 \(self.locationInfo)")
-      self.reloadObserver["locationInfo"] = true
-    }
-  }
-  
-  private var currently: Currently? {
-    didSet {
-      //print("currently 값 들어옴 / \(self.currently)")
-      self.reloadObserver["currently"] = true
-    }
-  }
-  
-  private var hourly: [Hourly]? {
-    didSet {
-      //print("hourly 값 들어옴")
-      self.reloadObserver["hourly"] = true
-//      self.hourly!.forEach {
-//        print($0)
-//      }
-    }
-  }
-  
-  private var daily: [Daily]? {
-    didSet {
-      //print("daily 값 들어옴 / \(self.daily)")
-      self.reloadObserver["daily"] = true
-    }
-  }
-  
-  private var subInfo: SubInfo? {
-    didSet {
-      guard let subInfo = self.subInfo else { return logger(ErrorLog.unwrap) }
+      guard let subInfo = self.weather?.subInfo else { return logger(ErrorLog.unwrap) }
       subInfoValues.append(subInfo.sunriseTime.getHourToString(true))
       subInfoValues.append(subInfo.precipProbability.convertPercentageToStr())
       subInfoValues.append(subInfo.windSpeed.convertWindFormatToStr())
@@ -75,7 +39,13 @@ final class WeatherViewController: UIViewController {
       subInfoValues.append(String(Int((subInfo.pressure).rounded(.down))) + "hPa")
       subInfoValues.append(String(Int(subInfo.uvIndex)))
       
-      self.reloadObserver["subInfo"] = true
+      self.reloadObserver["weather"] = true
+    }
+  }
+  
+  private var locationInfo: String? {
+    didSet {
+      self.reloadObserver["locationInfo"] = true
     }
   }
   
@@ -146,13 +116,12 @@ final class WeatherViewController: UIViewController {
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    // observer 초기화
-    reloadObserver = ["locationInfo" : false,
-                      "currently" : false,
-                      "hourly" : false,
-                      "daily" : false,
-                      "subInfo" : false]
+    // reloadObserver 초기화 시켜주기
+    self.reloadObserver.keys.forEach {
+      self.reloadObserver[$0] = false
+    }
   }
+  
   
   // MARK: - Callbacks : ToolBar Button Action
   private func weatherToolBarCallback() {
@@ -209,11 +178,13 @@ extension WeatherViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
     let cell = collectionView.dequeue(WeatherCollectionCell.self, indexPath)
-    if let currently = currently,
-      let daily = daily,
-      let dailyFirst = daily.first,
-      let hourly = hourly {
+    if let weather = weather,
+      let dailyFirst = weather.daily.first{
       
+      let currently = weather.currently
+      let hourly = weather.hourly
+      let daily = weather.daily
+      //let locationInfo = weather.locationInfo
       // Currently
       cell.currentLocationWeatherView.configureCurrentWeather(location: locationInfo ?? "",
                                                               summary: currently.summary,
@@ -318,11 +289,7 @@ extension WeatherViewController: CLLocationManagerDelegate {
       reverseGeocoding(location: location)
       
       // location 정보를 통해 네트워크로 날씨정보 가져오기
-      fetchCurrently(from: location)
-      fetchHourly(from: location)
-      fetchDaily(from: location)
-      fetchSubInfo(from: location)
-      
+      fetchWeather(from: location)
       
       lastRequestDate = currentDate
     }
@@ -352,67 +319,16 @@ extension WeatherViewController: CLLocationManagerDelegate {
   }
   
   
-  private func fetchCurrently(from location: CLLocation) {
-    weatherService.fetchCurrentlyData(latitude: location.coordinate.latitude,
+  private func fetchWeather(from location: CLLocation) {
+    weatherService.fetchWeatherData(latitude: location.coordinate.latitude,
                                       longitude: location.coordinate.longitude) {
       [weak self] result in
       guard let `self` = self else { return logger(ErrorLog.retainCycle) }
       
       DispatchQueue.main.async {
         switch result {
-        case .success(let currently):
-          self.currently = currently
-        case .failure(let error):
-          print(error.localizedDescription)
-        }
-      }
-    }
-  }
-  
-  private func fetchHourly(from location: CLLocation) {
-    weatherService.fetchHourlyData(latitude: location.coordinate.latitude,
-                                      longitude: location.coordinate.longitude) {
-      [weak self] result in
-      guard let `self` = self else { return logger(ErrorLog.retainCycle) }
-      
-      DispatchQueue.main.async {
-        switch result {
-        case .success(let hourly):
-          self.hourly = hourly
-        case .failure(let error):
-          print(error.localizedDescription)
-        }
-      }
-    }
-  }
-  
-  private func fetchDaily(from location: CLLocation) {
-    weatherService.fetchDailyData(latitude: location.coordinate.latitude,
-                                   longitude: location.coordinate.longitude) {
-      [weak self] result in
-      guard let `self` = self else { return logger(ErrorLog.retainCycle) }
-      
-      DispatchQueue.main.async {
-        switch result {
-        case .success(let daily):
-          self.daily = daily
-        case .failure(let error):
-          print(error.localizedDescription)
-        }
-      }
-    }
-  }
-  
-  private func fetchSubInfo(from location: CLLocation) {
-    weatherService.fetchSubInfoData(latitude: location.coordinate.latitude,
-                                   longitude: location.coordinate.longitude) {
-      [weak self] result in
-      guard let `self` = self else { return logger(ErrorLog.retainCycle) }
-      
-      DispatchQueue.main.async {
-        switch result {
-        case .success(let subInfo):
-          self.subInfo = subInfo
+        case .success(let weather):
+          self.weather = weather
         case .failure(let error):
           print(error.localizedDescription)
         }
