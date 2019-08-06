@@ -13,7 +13,6 @@ final class WeatherViewController: UIViewController {
   
   // MARK: Networking Properies
   private let weatherService: WeatherServiceType = WeatherService()
-  private var weather: Weather?
   
   // reload Observer를 두고 필요한 데이터 받았을 때 CollectionView 1번만 reload 시켜준다.
   private var reloadObserver: [String : Bool] = ["locationInfo" : false,

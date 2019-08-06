@@ -28,11 +28,12 @@ class MyWeatherListViewController: UIViewController {
     return cv
   }()
   
-  
+  // MARK: - ViewController LifeCyle
   override func viewDidLoad() {
     super.viewDidLoad()
     makeConstraints()
   }
+  
   
   // MARK: - Layout Methods
   private func makeConstraints() {
@@ -56,6 +57,9 @@ extension MyWeatherListViewController: UICollectionViewDataSource {
     let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                  withReuseIdentifier: MyWeatherListFooterView.identifier,
                                                                  for: indexPath) as! MyWeatherListFooterView
+    footer.plusButtonDidTap = {
+      self.present(UINavigationController(rootViewController: SearchLocationViewController()), animated: true, completion: nil)
+    }
     return footer
   }
 }

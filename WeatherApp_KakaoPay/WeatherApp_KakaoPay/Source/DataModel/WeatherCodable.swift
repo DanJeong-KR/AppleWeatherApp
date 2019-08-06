@@ -10,7 +10,7 @@ import Foundation
 
 
 
-struct Weather: Decodable, CustomStringConvertible {
+struct WeatherCodable: Decodable, CustomStringConvertible {
   
   let currently: Currently
   let hourly: [Hourly]

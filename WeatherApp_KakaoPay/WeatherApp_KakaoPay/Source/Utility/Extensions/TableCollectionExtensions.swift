@@ -10,7 +10,7 @@ import UIKit
 
 // 두 셀 타입 모두 Identifiable 프로토콜 채택시킨다.
 extension UITableViewCell: Identifiable { }
-//extension UICollectionViewCell: Identifiable { }
+extension UICollectionViewCell: Identifiable { }
 extension UICollectionReusableView: Identifiable { }
 
 

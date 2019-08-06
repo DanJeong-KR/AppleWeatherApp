@@ -56,6 +56,9 @@ class MyWeatherListFooterView: UICollectionReusableView {
     return bt
   }()
   
+  // MARK: - Callbacks
+  internal var plusButtonDidTap: (() -> ())?
+  
   // MARK: - Initializers
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -88,6 +91,12 @@ class MyWeatherListFooterView: UICollectionReusableView {
       openSafariForDetial()
     case ButtonID.plusButton.id:
       print("plusButton 클릭")
+      if let plusButtonDidTap = plusButtonDidTap {
+        plusButtonDidTap()
+      } else {
+        logger(ErrorLog.callback)
+      }
+      
     default:
       break
     }

@@ -9,11 +9,6 @@
 import Foundation
 
 protocol WeatherServiceType {
-  func fetchWeather(
-    latitude: Double,
-    longitude: Double,
-    completionHandler: @escaping (Result<Weather, ServiceError>) -> Void
-  )
   
   func fetchCurrentlyData(
     latitude: Double,
