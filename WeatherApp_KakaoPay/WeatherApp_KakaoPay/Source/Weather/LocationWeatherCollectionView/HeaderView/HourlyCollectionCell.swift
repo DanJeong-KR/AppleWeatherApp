@@ -66,8 +66,8 @@ class HourlyCollectionCell: UICollectionViewCell {
     icon: String,
     temperature: Double
     ) {
-    self.hourLabel.text = hour.getHourToString() + "시"
-    self.weatherIconImageView.image = UIImage(named: icon)
-    self.tempLabel.text = temperature.convertToCelsiusIntoString()
+    self.hourLabel.text = hour.getHourToString(false) + "시"
+    self.weatherIconImageView.image = UIImage(named: icon.checkWeatherIcon())
+    self.tempLabel.text = temperature.convertToCelsiusIntoString() + "°"
   }
 }

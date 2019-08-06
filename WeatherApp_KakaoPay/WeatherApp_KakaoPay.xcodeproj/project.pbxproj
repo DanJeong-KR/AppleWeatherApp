@@ -34,6 +34,8 @@
 		8E7712A322F8481000B763DF /* WeatherExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7712A222F8481000B763DF /* WeatherExtensions.swift */; };
 		8E7712A522F888E600B763DF /* DailyWeatherCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7712A422F888E600B763DF /* DailyWeatherCollectionView.swift */; };
 		8E7712A722F890BF00B763DF /* SubInfoCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7712A622F890BF00B763DF /* SubInfoCollectionView.swift */; };
+		8E7712A922F8AA8A00B763DF /* SubInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7712A822F8AA8A00B763DF /* SubInfo.swift */; };
+		8E7712AB22F94CFF00B763DF /* AlertExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7712AA22F94CFF00B763DF /* AlertExtensions.swift */; };
 		8E9F6DC922F3C7F900DB9869 /* ErrorLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9F6DC822F3C7F900DB9869 /* ErrorLog.swift */; };
 		8E9F6DD022F3D2FC00DB9869 /* CurrentLocationWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9F6DCF22F3D2FC00DB9869 /* CurrentLocationWeatherView.swift */; };
 		8E9F6DE722F3DA6200DB9869 /* MyWeatherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9F6DE622F3DA6200DB9869 /* MyWeatherListViewController.swift */; };
@@ -77,6 +79,8 @@
 		8E7712A222F8481000B763DF /* WeatherExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherExtensions.swift; sourceTree = "<group>"; };
 		8E7712A422F888E600B763DF /* DailyWeatherCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherCollectionView.swift; sourceTree = "<group>"; };
 		8E7712A622F890BF00B763DF /* SubInfoCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubInfoCollectionView.swift; sourceTree = "<group>"; };
+		8E7712A822F8AA8A00B763DF /* SubInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubInfo.swift; sourceTree = "<group>"; };
+		8E7712AA22F94CFF00B763DF /* AlertExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertExtensions.swift; sourceTree = "<group>"; };
 		8E9F6DC822F3C7F900DB9869 /* ErrorLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLog.swift; sourceTree = "<group>"; };
 		8E9F6DCF22F3D2FC00DB9869 /* CurrentLocationWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationWeatherView.swift; sourceTree = "<group>"; };
 		8E9F6DE622F3DA6200DB9869 /* MyWeatherListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWeatherListViewController.swift; sourceTree = "<group>"; };
@@ -225,6 +229,7 @@
 				8E77129922F7DA7E00B763DF /* Currently.swift */,
 				8E77129B22F7EBF100B763DF /* Hourly.swift */,
 				8E77129D22F7EEDC00B763DF /* Daily.swift */,
+				8E7712A822F8AA8A00B763DF /* SubInfo.swift */,
 				8E77128922F6DA5000B763DF /* SampleData.swift */,
 			);
 			path = DataModel;
@@ -285,6 +290,7 @@
 				8E77128D22F6DFF800B763DF /* TableCollectionExtensions.swift */,
 				8EC2173222F1F41B006CFD1D /* DecodableExtensions.swift */,
 				8EC2173322F1F41B006CFD1D /* Identifiable.swift */,
+				8E7712AA22F94CFF00B763DF /* AlertExtensions.swift */,
 				8E7712A222F8481000B763DF /* WeatherExtensions.swift */,
 			);
 			path = Extensions;
@@ -376,6 +382,7 @@
 				8E7712A722F890BF00B763DF /* SubInfoCollectionView.swift in Sources */,
 				8E77129C22F7EBF100B763DF /* Hourly.swift in Sources */,
 				8E77129A22F7DA7E00B763DF /* Currently.swift in Sources */,
+				8E7712AB22F94CFF00B763DF /* AlertExtensions.swift in Sources */,
 				8E77127A22F59CD300B763DF /* LocationWeatherCollectionView.swift in Sources */,
 				8E77126D22F567D400B763DF /* LocationWeatherHeaderView.swift in Sources */,
 				8E77129022F6E5F700B763DF /* ServiceError.swift in Sources */,
@@ -392,6 +399,7 @@
 				8E77127522F5783C00B763DF /* HourlyCollectionView.swift in Sources */,
 				8EC2172D22F1F3D9006CFD1D /* Logger.swift in Sources */,
 				8E7712A522F888E600B763DF /* DailyWeatherCollectionView.swift in Sources */,
+				8E7712A922F8AA8A00B763DF /* SubInfo.swift in Sources */,
 				8E77129822F7D4C400B763DF /* WeatherServiceStub.swift in Sources */,
 				8E9F6DD022F3D2FC00DB9869 /* CurrentLocationWeatherView.swift in Sources */,
 				8E9F6DC922F3C7F900DB9869 /* ErrorLog.swift in Sources */,

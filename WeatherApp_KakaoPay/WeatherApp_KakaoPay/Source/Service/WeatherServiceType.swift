@@ -33,4 +33,10 @@ protocol WeatherServiceType {
     completionHandler: @escaping (Result<[Daily], ServiceError>) -> Void
   )
   
+  func fetchSubInfoData(
+    latitude: Double,
+    longitude: Double,
+    completionHandler: @escaping (Result<SubInfo, ServiceError>) -> Void
+  )
+  
 }

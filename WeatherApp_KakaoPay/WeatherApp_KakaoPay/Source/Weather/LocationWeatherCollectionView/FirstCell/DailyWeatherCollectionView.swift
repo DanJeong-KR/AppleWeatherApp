@@ -12,19 +12,11 @@ class DailyWeatherCollectionView: UICollectionView {
 
   internal var dailyWeatherCollectionCellDidLoad: ((DailyWeatherCollectionCell, IndexPath) -> Void)?
   
-  // MARK: - Properties
-  private lazy var separateLineView: SeparateLineView = {
-    let slv = SeparateLineView(frame: .zero)
-    addSubview(slv)
-    return slv
-  }()
-  
   // MARK: - Initializers
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
     super.init(frame: frame, collectionViewLayout: layout)
     backgroundColor = .clear
     configureSelf()
-    makeConstraints()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -41,10 +33,6 @@ class DailyWeatherCollectionView: UICollectionView {
     backgroundColor = .clear
     allowsSelection = false
   }
-  
-  private func makeConstraints() {
-    separateLineView.makeConstraints(atBottom: self.bottomAnchor)
-  }
 
 }
 
@@ -52,7 +40,7 @@ class DailyWeatherCollectionView: UICollectionView {
 // MARK: - CollectionView DataSource
 extension DailyWeatherCollectionView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 9
+    return 8
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

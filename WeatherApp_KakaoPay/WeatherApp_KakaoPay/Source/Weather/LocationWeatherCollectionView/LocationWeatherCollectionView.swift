@@ -28,6 +28,13 @@ class LocationWeatherCollectionView: UICollectionView {
     fatalError(ErrorLog.coderInit)
   }
   
+  deinit {
+    headerDidLoad = nil
+    firstCollectionCellDidLoad = nil
+    secondCollectionCellDidLoad = nil
+    thirdCollectionCellDidLoad = nil
+  }
+  
   // MARK: - Configure
   private func configure() {
     register(LocationWeatherHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: LocationWeatherHeaderView.identifier)
@@ -101,7 +108,7 @@ extension LocationWeatherCollectionView: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     switch indexPath.item {
     case 0:
-      return CGSize(width: ScreenBounds.width, height: ScreenBounds.height * 0.45)
+      return CGSize(width: ScreenBounds.width, height: ScreenBounds.height * 0.40)
     case 1:
       return CGSize(width: ScreenBounds.width, height: ScreenBounds.height * 0.1)
     case 2:

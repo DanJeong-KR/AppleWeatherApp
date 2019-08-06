@@ -9,8 +9,7 @@
 import Foundation
 
 struct Daily {
-  //let sunriseTime: Double // 시간별 날씨에서 계산할 때 필요하다.
-  //let sunsetTime: Double
+  
   let time: Double
   let icon: String
   let temperatureMax: Double

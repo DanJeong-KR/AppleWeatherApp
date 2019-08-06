@@ -46,12 +46,43 @@ extension Double {
   }
   
   // 시간 가져오기 (시간별 예보에 필요)
-  func getHourToString() -> String {
+  func getHourToString(_ isSunData: Bool) -> String {
     let date = Date(timeIntervalSince1970: self)
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale(identifier: "ko_KR")
-    dateFormatter.dateFormat = "a h"
+    if isSunData {
+      dateFormatter.dateFormat = "a h:mm"
+    }else {
+      dateFormatter.dateFormat = "a h"
+    }
     return dateFormatter.string(from: date)
+  }
+  
+  // 소수점 %표시 바꾸기 (비 올 확률, 습도)
+  func convertPercentageToStr() -> String {
+    let result = Int((self * 100).rounded(.down))
+    return String(result) + "%"
+  }
+  
+  // 풍속 mile/hour -> m/s 로 바꾸기
+  func convertWindFormatToStr() -> String {
+    let meter = self * 1609.344
+    let meterPerSecond = meter / 3600
+    var result = -1 // 임시변수
+    if meterPerSecond < 0 {
+      return "error"
+    } else if meterPerSecond < 1 {
+      result = Int(meterPerSecond.rounded(.up))
+    } else {
+      result = Int(meterPerSecond.rounded(.up))
+    }
+    return String(result) + "m/s"
+  }
+  
+  // 강수량 milimeter -> centimeter 로 바꾸기
+  func convertMiliToCentiIntoStr() -> String {
+    let result = Int((self * 10).rounded(.down))
+    return String(result) + "cm"
   }
 }
 

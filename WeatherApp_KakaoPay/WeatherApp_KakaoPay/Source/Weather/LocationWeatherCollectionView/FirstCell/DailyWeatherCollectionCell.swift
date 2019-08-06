@@ -85,7 +85,7 @@ class DailyWeatherCollectionCell: UICollectionViewCell {
     minTemperature: Double
     ) {
     self.dayLabel.text = day.getWeekDayToString()
-    self.weatherIconImageView.image = UIImage(named: icon)
+    self.weatherIconImageView.image = UIImage(named: icon.checkWeatherIcon())
     self.maxTempLabel.text = maxTemperature.convertToCelsiusIntoString()
     self.minTempLabel.text = minTemperature.convertToCelsiusIntoString()
   }

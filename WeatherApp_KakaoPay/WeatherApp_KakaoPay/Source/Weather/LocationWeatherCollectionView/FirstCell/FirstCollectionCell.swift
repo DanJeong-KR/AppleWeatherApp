@@ -11,6 +11,12 @@ import UIKit
 class FirstCollectionCell: UICollectionViewCell {
   
   // MARK: - Properties
+  private lazy var separateLineView: SeparateLineView = {
+    let slv = SeparateLineView(frame: .zero)
+    addSubview(slv)
+    return slv
+  }()
+  
   internal lazy var dailyWeatherCollectionView: DailyWeatherCollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .vertical
@@ -39,5 +45,8 @@ class FirstCollectionCell: UICollectionViewCell {
   
   private func makeConstraints() {
     dailyWeatherCollectionView.layout.equalToSuperView()
+    separateLineView.makeConstraints(atBottom: dailyWeatherCollectionView.bottomAnchor)
+
   }
+  
 }
