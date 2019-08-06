@@ -15,43 +15,50 @@ final class WeatherViewController: UIViewController {
   private let weatherService: WeatherServiceType = WeatherService()
   private var weather: Weather?
   
+  // reload Observer를 두고 필요한 데이터 받았을 때 CollectionView 1번만 reload 시켜준다.
+  private var reloadObserver: [String : Bool] = ["locationInfo" : false,
+                                                 "currently" : false,
+                                                 "hourly" : false,
+                                                 "daily" : false,
+                                                 "subInfo" : false]
+    {
+    didSet {
+      DispatchQueue.main.async {
+        if !self.reloadObserver.values.contains(false) {
+          self.weatherCollectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
+        }
+      }
+    }
+  }
+  
   private var locationInfo: String? {
     didSet {
-      print("locationInfo 값 들어옴 \(self.locationInfo)")
-      DispatchQueue.main.async {
-        self.weatherCollectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
-      }
+      //print("locationInfo 값 들어옴 \(self.locationInfo)")
+      self.reloadObserver["locationInfo"] = true
     }
   }
   
   private var currently: Currently? {
     didSet {
-      print("currently 값 들어옴 / \(self.currently)")
-      DispatchQueue.main.async {
-        self.weatherCollectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
-      }
-      
+      //print("currently 값 들어옴 / \(self.currently)")
+      self.reloadObserver["currently"] = true
     }
   }
   
   private var hourly: [Hourly]? {
     didSet {
-      print("hourly 값 들어옴")
-      self.hourly!.forEach {
-        print($0)
-      }
-      DispatchQueue.main.async {
-        self.weatherCollectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
-      }
+      //print("hourly 값 들어옴")
+      self.reloadObserver["hourly"] = true
+//      self.hourly!.forEach {
+//        print($0)
+//      }
     }
   }
   
   private var daily: [Daily]? {
     didSet {
-      print("daily 값 들어옴 / \(self.daily)")
-      DispatchQueue.main.async {
-        self.weatherCollectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
-      }
+      //print("daily 값 들어옴 / \(self.daily)")
+      self.reloadObserver["daily"] = true
     }
   }
   
@@ -68,6 +75,8 @@ final class WeatherViewController: UIViewController {
       subInfoValues.append(subInfo.apparentTemperature.convertToCelsiusIntoString() + "°")
       subInfoValues.append(String(Int((subInfo.pressure).rounded(.down))) + "hPa")
       subInfoValues.append(String(Int(subInfo.uvIndex)))
+      
+      self.reloadObserver["subInfo"] = true
     }
   }
   
@@ -124,25 +133,39 @@ final class WeatherViewController: UIViewController {
   // MARK: - VC LifeCycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view.
     view.addSubview(backgroundImageView)
     configureLocationManager()
     makeConstraints()
-    serviceTest()
+    weatherToolBarCallback()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    // 사용자 위치정보 체크
     requestLocationAuthorization()
   }
   
-  private func presentAlert(title: String = "알림", message: String) {
-    let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-    let okAction = UIAlertAction(title: "확인", style: .default)
-    alertController.addAction(okAction)
-    
-    if presentedViewController == nil {
-      present(alertController, animated: true)
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    // observer 초기화
+    reloadObserver = ["locationInfo" : false,
+                      "currently" : false,
+                      "hourly" : false,
+                      "daily" : false,
+                      "subInfo" : false]
+  }
+  
+  // MARK: - Callbacks : ToolBar Button Action
+  private func weatherToolBarCallback() {
+    weatherToolBar.locationListButtonDidTap = {
+      self.present(MyWeatherListViewController(), animated: true, completion: nil)
+    }
+    weatherToolBar.detailWeatherButtonDidTap = {
+      guard let url = URL(string: "https://weather.com/ko-KR/weather/today/l/Seodaemun+gu+Seoul?canonicalCityId=41c20b9e59a1464c5b8d316200c6deb511ff191cf1fadb295f52bf3b6b7b5642"),
+        UIApplication.shared.canOpenURL(url) else {
+          return logger("Can't open Safari App")
+      }
+      UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
   }
   
@@ -166,54 +189,6 @@ final class WeatherViewController: UIViewController {
       break
     default:
       self.showAlert("앱을 사용하기 위해서는 위치 권한이 필요합니다.")
-    }
-  }
-  
-  // MARK: - Networking Service
-  private func serviceTest() {
-    //test
-//    weatherService.fetchCurrentlyData(latitude: 37.54335, longitude: 127.06062) {
-//      [weak self] result in
-//      guard let self = self else { return logger(ErrorLog.retainCycle) }
-//      switch result {
-//      case .success(let value):
-//        self.currently = value
-//      case .failure(let error):
-//        logger(error.localizedDescription)
-//      }
-//    }
-    
-    weatherService.fetchHourlyData(latitude: 37.54335, longitude: 127.06062) {
-      [weak self] result in
-      guard let self = self else { return logger(ErrorLog.retainCycle) }
-      switch result {
-      case .success(let value):
-        self.hourly = value
-      case .failure(let error):
-        logger(error.localizedDescription)
-      }
-    }
-    
-    weatherService.fetchDailyData(latitude: 37.54335, longitude: 127.06062) {
-      [weak self] result in
-      guard let self = self else { return logger(ErrorLog.retainCycle) }
-      switch result {
-      case .success(let value):
-        self.daily = value
-      case .failure(let error):
-        logger(error.localizedDescription)
-      }
-    }
-    
-    weatherService.fetchSubInfoData(latitude: 37.54335, longitude: 127.06062) {
-      [weak self] result in
-      guard let self = self else { return logger(ErrorLog.retainCycle) }
-      switch result {
-      case .success(let value):
-        self.subInfo = value
-      case .failure(let error):
-        logger(error.localizedDescription)
-      }
     }
   }
   
@@ -340,8 +315,16 @@ extension WeatherViewController: CLLocationManagerDelegate {
     
     // 최초 정보와 시간 차가 2초 이상 날 때만 데이터 업데이트 시킬 생각
     if abs(lastRequestDate.timeIntervalSince(currentDate)) > 2 {
+      // 현재위치 지역이름 가져오기
       reverseGeocoding(location: location)
+      
+      // location 정보를 통해 네트워크로 날씨정보 가져오기
       fetchCurrently(from: location)
+      fetchHourly(from: location)
+      fetchDaily(from: location)
+      fetchSubInfo(from: location)
+      
+      
       lastRequestDate = currentDate
     }
   }
@@ -369,8 +352,8 @@ extension WeatherViewController: CLLocationManagerDelegate {
     }
   }
   
+  
   private func fetchCurrently(from location: CLLocation) {
-    
     weatherService.fetchCurrentlyData(latitude: location.coordinate.latitude,
                                       longitude: location.coordinate.longitude) {
       [weak self] result in
@@ -386,4 +369,56 @@ extension WeatherViewController: CLLocationManagerDelegate {
       }
     }
   }
+  
+  private func fetchHourly(from location: CLLocation) {
+    weatherService.fetchHourlyData(latitude: location.coordinate.latitude,
+                                      longitude: location.coordinate.longitude) {
+      [weak self] result in
+      guard let `self` = self else { return logger(ErrorLog.retainCycle) }
+      
+      DispatchQueue.main.async {
+        switch result {
+        case .success(let hourly):
+          self.hourly = hourly
+        case .failure(let error):
+          print(error.localizedDescription)
+        }
+      }
+    }
+  }
+  
+  private func fetchDaily(from location: CLLocation) {
+    weatherService.fetchDailyData(latitude: location.coordinate.latitude,
+                                   longitude: location.coordinate.longitude) {
+      [weak self] result in
+      guard let `self` = self else { return logger(ErrorLog.retainCycle) }
+      
+      DispatchQueue.main.async {
+        switch result {
+        case .success(let daily):
+          self.daily = daily
+        case .failure(let error):
+          print(error.localizedDescription)
+        }
+      }
+    }
+  }
+  
+  private func fetchSubInfo(from location: CLLocation) {
+    weatherService.fetchSubInfoData(latitude: location.coordinate.latitude,
+                                   longitude: location.coordinate.longitude) {
+      [weak self] result in
+      guard let `self` = self else { return logger(ErrorLog.retainCycle) }
+      
+      DispatchQueue.main.async {
+        switch result {
+        case .success(let subInfo):
+          self.subInfo = subInfo
+        case .failure(let error):
+          print(error.localizedDescription)
+        }
+      }
+    }
+  }
+  
 }

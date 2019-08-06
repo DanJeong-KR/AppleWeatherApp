@@ -19,8 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.makeKeyAndVisible()
     window?.backgroundColor = .white
-    window?.rootViewController = WeatherViewController()
-//    window?.rootViewController = MyWeatherListViewController()
+//    window?.rootViewController = WeatherViewController()
+    window?.rootViewController = MyWeatherListViewController()
     
     return true
   }

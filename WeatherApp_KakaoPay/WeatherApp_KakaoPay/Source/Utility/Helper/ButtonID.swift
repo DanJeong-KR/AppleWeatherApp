@@ -11,6 +11,9 @@ import UIKit
 enum ButtonID: Int {
   case detailWeatherButton
   case locationListButton
+  case celsiusButton
+  case fahrenheitButton
+  case plusButton
   
   var id: Int {
     return self.rawValue

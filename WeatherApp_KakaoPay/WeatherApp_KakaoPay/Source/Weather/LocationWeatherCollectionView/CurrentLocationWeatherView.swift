@@ -13,7 +13,7 @@ class CurrentLocationWeatherView: UIView {
   // MARK: - Properties
   private lazy var locationLabel: UILabel = {
     let lb = UILabel(frame: .zero)
-    lb.text = "성동구"
+    lb.text = ""
     lb.font = WeatherFont.location
     lb.textColor = WeatherColor.mainTextColor
     addSubview(lb)
@@ -22,7 +22,7 @@ class CurrentLocationWeatherView: UIView {
   
   private lazy var summaryLabel: UILabel = {
     let lb = UILabel(frame: .zero)
-    lb.text = "청명함"
+    lb.text = ""
     lb.font = UIFont.systemFont(ofSize: 17, weight: .regular)
     lb.textColor = WeatherColor.mainTextColor
     addSubview(lb)
@@ -31,7 +31,7 @@ class CurrentLocationWeatherView: UIView {
   
   private lazy var temperatureLabel: UILabel = {
     let lb = UILabel(frame: .zero)
-    lb.text = "27°"
+    lb.text = ""
     lb.font = WeatherFont.currentTemp
     lb.textColor = WeatherColor.mainTextColor
     addSubview(lb)

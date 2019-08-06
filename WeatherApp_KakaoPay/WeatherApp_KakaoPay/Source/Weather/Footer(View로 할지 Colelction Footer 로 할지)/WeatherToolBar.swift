@@ -9,7 +9,8 @@
 import UIKit
 
 class WeatherToolBar: UIToolbar {
-
+  
+  // MARK: - Properties
   private lazy var detailWeatherButton: UIButton = {
     let bt = UIButton(type: .custom)
     bt.backgroundColor = .yellow
@@ -39,8 +40,11 @@ class WeatherToolBar: UIToolbar {
     return pc
   }()
   
-  // MARK: - Initializers
+  // MARK: - Callback
+  internal var detailWeatherButtonDidTap: (() -> ())?
+  internal var locationListButtonDidTap: (() -> ())?
   
+  // MARK: - Initializers
   override init(frame: CGRect) {
     super.init(frame: frame)
     barTintColor = #colorLiteral(red: 1.034923662e-05, green: 0.0002555906831, blue: 0.007866344415, alpha: 1)
@@ -69,9 +73,18 @@ class WeatherToolBar: UIToolbar {
     switch sender.id {
     case ButtonID.detailWeatherButton.id:
       print("detailWeatherButton 버튼 클릭")
+      if let detailWeatherButtonDidTap = detailWeatherButtonDidTap {
+        detailWeatherButtonDidTap()
+      }else {
+        logger(ErrorLog.callback)
+      }
     case ButtonID.locationListButton.id:
       print("locationListButton 버튼 클릭")
-      
+      if let locationListButtonDidTap = locationListButtonDidTap {
+        locationListButtonDidTap()
+      }else {
+        logger(ErrorLog.callback)
+      }
     default:
       break
     }

@@ -33,4 +33,6 @@ internal struct WeatherColor {
 internal struct WeatherLayout {
   static let leftPadding: CGFloat = 10
   static let rightPadding: CGFloat = -10
+  
+  static let topPadding: CGFloat = 10
 }
