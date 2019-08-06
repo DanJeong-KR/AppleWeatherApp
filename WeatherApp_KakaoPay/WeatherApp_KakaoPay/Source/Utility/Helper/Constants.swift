@@ -11,6 +11,7 @@ import UIKit
 internal struct ScreenBounds {
   static let width = UIScreen.main.bounds.width
   static let height = UIScreen.main.bounds.height
+  static let bounds = UIScreen.main.bounds
 }
 
 internal struct WeatherFont {

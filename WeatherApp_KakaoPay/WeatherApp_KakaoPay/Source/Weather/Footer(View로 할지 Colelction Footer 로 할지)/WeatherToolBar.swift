@@ -31,14 +31,14 @@ class WeatherToolBar: UIToolbar {
     return bt
   }()
   
-  private lazy var pageControl: UIPageControl = {
-    let pc = UIPageControl(frame: .zero)
-    pc.numberOfPages = 3
-    pc.currentPageIndicatorTintColor = .white
-    pc.pageIndicatorTintColor = .gray
-    addSubview(pc)
-    return pc
-  }()
+//  internal lazy var pageControl: UIPageControl = {
+//    let pc = UIPageControl(frame: .zero)
+//    pc.numberOfPages = 1
+//    pc.currentPageIndicatorTintColor = .white
+//    pc.pageIndicatorTintColor = .gray
+//    addSubview(pc)
+//    return pc
+//  }()
   
   // MARK: - Callback
   internal var detailWeatherButtonDidTap: (() -> ())?
@@ -65,7 +65,7 @@ class WeatherToolBar: UIToolbar {
     let guide = self.safeAreaLayoutGuide
     detailWeatherButton.layout.centerY().leading(equalTo: guide.leadingAnchor, constant: 10)
     locationListButton.layout.centerY().trailing(equalTo: guide.trailingAnchor, constant: -10)
-    pageControl.layout.centerX().centerY()
+    //pageControl.layout.centerX().centerY()
   }
   
   // MARK: - Action Methods

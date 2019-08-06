@@ -11,36 +11,15 @@ import CoreLocation
 
 final class WeatherViewController: UIViewController {
   
-  // MARK: - Observer
-  //위치정보와 날씨정보 모두 받을 때 collectionView 를 한번만 reload 시켜줄 의도
-  private var reloadObserver: [String : Bool] = ["weather" : false, "locationInfo" : false, "subInfoValues" : false] {
-    didSet {
-      if !self.reloadObserver.values.contains(false) {
-        DispatchQueue.main.async {
-          self.weatherCollectionView.reloadData()
-        }
-      }
-    }
-  }
-  
+  // MARK: - Data Properties
   private var weather: [Weather]? {
-    didSet {
-      self.subInfoValues = DataManager.shared.getSubInfoValues()
-      self.reloadObserver["weather"] = true
-    }
-  }
-  
-  private var locationInfo: String? {
-    didSet {
-      self.reloadObserver["locationInfo"] = true
-    }
+    return DataManager.shared.getWeather()
   }
   
   internal var subInfoTitles = ["일출", "비 올 확률", "바람", "강수량", "가시거리", "일몰", "습도", "체감", "기압", "자외선 지수"]
-  internal var subInfoValues: [[String]] = [] {
-    didSet {
-      self.reloadObserver["subInfoValues"] = true
-    }
+  
+  internal var subInfoValues: [[String]] {
+    return DataManager.shared.getSubInfoValues()
   }
   
   // MARK: - Location Properties
@@ -55,27 +34,23 @@ final class WeatherViewController: UIViewController {
   }
   
   private let backgroundImageView: UIImageView = {
-    let screenBounds = UIScreen.main.bounds
-    let iv = UIImageView(frame: screenBounds)
+    let iv = UIImageView(frame: ScreenBounds.bounds)
     iv.image = UIImage(named: "night")
     iv.contentMode = .scaleToFill
     return iv
   }()
   
-  private lazy var weatherCollectionView: UICollectionView = {
+  internal lazy var weatherCollectionView: UICollectionView = {
     // init
     let layout = UICollectionViewFlowLayout()
     layout.minimumLineSpacing = 0
     layout.scrollDirection = .horizontal
     let c = UICollectionView(frame: .zero, collectionViewLayout: layout)
     
-    // collection 설정
     c.register(cell: WeatherCollectionCell.self)
-    
     c.dataSource = self
     c.delegate = self
     
-    // 레이아웃 설정
     c.isPagingEnabled = true
     c.backgroundColor = .clear
     
@@ -83,20 +58,29 @@ final class WeatherViewController: UIViewController {
     return c
   }()
   
-  
   private lazy var weatherToolBar: WeatherToolBar = {
     let tb = WeatherToolBar(frame: .zero)
     view.addSubview(tb)
     return tb
   }()
+  
+  internal lazy var pageControl: UIPageControl = {
+    let pc = UIPageControl(frame: .zero)
+    pc.numberOfPages = 4
+    pc.currentPageIndicatorTintColor = .white
+    pc.pageIndicatorTintColor = .gray
+    weatherToolBar.addSubview(pc)
+    return pc
+  }()
 
   // MARK: - VC LifeCycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.addSubview(backgroundImageView)
+    view.addSubview(backgroundImageView) // 가장 처음에 addsubView 하기 위해 앞에 배치.
     configureLocationManager()
-    makeConstraints()
     weatherToolBarCallback()
+    configureReloadObserver()
+    makeConstraints()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -105,14 +89,22 @@ final class WeatherViewController: UIViewController {
     requestLocationAuthorization()
   }
   
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    // reloadObserver 초기화 시켜주기
-    self.reloadObserver.keys.forEach {
-      self.reloadObserver[$0] = false
-    }
+  deinit {
+    DataManager.shared.noti.removeObserver(self, name: NotificationID.DataDidChanged, object: nil)
   }
   
+  // MARK: - Reload Notifications
+  private func configureReloadObserver() {
+    DataManager.shared.noti.addObserver(self, selector: #selector(reloadObserver(_:)), name: NotificationID.DataDidChanged, object: nil)
+  }
+  
+  @objc func reloadObserver(_ sender: Any) {
+    logger("Reload")
+    DispatchQueue.main.async {
+      self.weatherCollectionView.reloadData()
+      self.pageControl.numberOfPages = self.weather?.count ?? 1
+    }
+  }
   
   // MARK: - Callbacks : ToolBar Button Action
   private func weatherToolBarCallback() {
@@ -155,6 +147,7 @@ final class WeatherViewController: UIViewController {
   private func makeConstraints() {
     weatherCollectionView.layout.top().leading().trailing()
     weatherToolBar.layout.top(equalTo: weatherCollectionView.bottomAnchor).leading().trailing().bottom()
+    pageControl.layout.centerX().centerY()
   }
 
 }
@@ -169,15 +162,14 @@ extension WeatherViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
     let cell = collectionView.dequeue(WeatherCollectionCell.self, indexPath)
-    if let weather = weather,
-      let dailyFirst = weather[indexPath.row].daily.first{
-      
+    if let weather = weather, let dailyFirst = weather[indexPath.row].daily.first {
+      let weatherIndex = weather[indexPath.row]
       let currently = weather[indexPath.row].currently
       let hourly = weather[indexPath.row].hourly
       let daily = weather[indexPath.row].daily
       //let locationInfo = weather.locationInfo
       // Currently
-      cell.currentLocationWeatherView.configureCurrentWeather(location: locationInfo ?? "",
+      cell.currentLocationWeatherView.configureCurrentWeather(location: weatherIndex.locationInfo ?? "",
                                                               summary: currently.summary,
                                                               temperature: currently.temperature,
                                                               day: currently.time,
@@ -242,6 +234,12 @@ extension WeatherViewController: UICollectionViewDelegateFlowLayout {
                 self.weatherCollectionView.bounds.height)
     return CGSize(width: size.0, height: size.1)
   }
+  
+  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    let currentPageIndex = Int(scrollView.contentOffset.x / ScreenBounds.width)
+    print("currentPageIndex : \(currentPageIndex)")
+    pageControl.currentPage = currentPageIndex
+  }
 }
 
 // MARK: - Location Delegate
@@ -277,19 +275,18 @@ extension WeatherViewController: CLLocationManagerDelegate {
     // 최초 정보와 시간 차가 2초 이상 날 때만 데이터 업데이트 시킬 생각
     if abs(lastRequestDate.timeIntervalSince(currentDate)) > 2 {
       // 현재위치 지역이름 가져오기
-      reverseGeocoding(location: location)
-      
       // location 정보를 통해 네트워크로 날씨정보 가져오기
 //      fetchWeather(from: location)
-      DataManager.shared.fetchCurrentWeather(from: location) {
-        self.weather = DataManager.shared.getWeather()
+      DataManager.shared.fetchCurrentWeather(from: location.coordinate) {
+        // 날씨 정보 먼저 받고 이후에 위치 정보 받는다. (weather 데이터의 첫 데이터는 현재위치로 설정하기 위함)
+        self.getLocationInfoByreverseGeocoding(location: location)
       }
       lastRequestDate = currentDate
     }
   }
   
   // 위치 정보 location 을 인자로 받는다.
-  private func reverseGeocoding(location: CLLocation) {
+  private func getLocationInfoByreverseGeocoding(location: CLLocation){
     
     let geocoder = CLGeocoder()
     geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
@@ -302,12 +299,11 @@ extension WeatherViewController: CLLocationManagerDelegate {
       let thoroughfare = place.thoroughfare ?? "" // 남산대로 / subLocality 로 나타나지 않는 것들이 thoroughfare 속성으로 들어온다.
       let address = locality + " " + (!subLocality.isEmpty ? subLocality : thoroughfare)
       
+      DataManager.shared.setCurrentLocationInfo(locality)
       print("locality : \(locality)")
       print("sublocality : \(subLocality)")
       print("thoroughfare : \(thoroughfare)")
       print("address : \(address)")
-      
-      self.locationInfo = locality
     }
   }
   

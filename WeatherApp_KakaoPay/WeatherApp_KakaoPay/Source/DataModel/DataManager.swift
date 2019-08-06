@@ -14,9 +14,14 @@ final class DataManager {
   private init(){}
   
   let weatherService: WeatherServiceType = WeatherService()
+  let noti = NotificationCenter.default
   
   // MAKR: - Weather Data
-  private var weather: [Weather] = [] 
+  private var weather: [Weather] = [] {
+    didSet {
+      noti.post(name: NotificationID.DataDidChanged, object: nil)
+    }
+  }
   
   // MARK: - Tools for manipulate Data
   internal func getWeather() -> [Weather] {
@@ -27,15 +32,12 @@ final class DataManager {
     self.weather.append(weather)
   }
   
-  internal func syncCurrentWeather(into weather: Weather) {
-    if self.weather.first == nil { // 비어있으면
-      self.weather.append(weather)
-    }else {
-      self.weather[0] = weather // sync
-    }
+  internal func setCurrentLocationInfo(_ locationInfo: String){
+    guard let _ = weather.first else { return logger("Weather Data is Empty") }
+    self.weather[0].setLocationName(to: locationInfo)
   }
   
-  // SubInfo 데이터는 데이터매니져에서 단위 변환 해준다.
+  // SubInfo 데이터는 매니저에서 단위 변환 해준다.
   internal func getSubInfoValues() -> [[String]] {
     var result: [[String]] = []
     self.weather.forEach {
@@ -56,15 +58,47 @@ final class DataManager {
   }
   
   // MARK: - Networking
-  internal func fetchCurrentWeather(from location: CLLocation, completionHandler: (() -> ())? ){
-    weatherService.fetchWeatherData(latitude: location.coordinate.latitude,
-                                    longitude: location.coordinate.longitude) {
+  // 현재위치 날씨정보 가져오기 (갱신기능)
+  internal func fetchCurrentWeather(from coordinate: CLLocationCoordinate2D, completionHandler: (() -> ())? ){
+    weatherService.fetchWeatherData(latitude: coordinate.latitude,
+                                    longitude: coordinate.longitude,
+                                    locationInfo: nil) {
       [weak self] result in
       guard let `self` = self else { return logger(ErrorLog.retainCycle)}
       
       switch result {
       case .success(let weather):
         self.syncCurrentWeather(into: weather)
+      case .failure(let error):
+        print(error.localizedDescription)
+      }
+      if let completionHandler = completionHandler {
+        completionHandler()
+      }
+    }
+  }
+  
+  private func syncCurrentWeather(into weather: Weather) {
+    if self.weather.first == nil { // 비어있으면
+      self.weather.append(weather)
+    }else {
+      self.weather[0] = weather // sync
+    }
+  }
+  
+  // 검색한 위치 날씨정보 가져오기
+  internal func fetchWeather(from coordinate: CLLocationCoordinate2D,
+                             with locationInfo: String,
+                             completionHandler: (() -> ())? ){
+    weatherService.fetchWeatherData(latitude: coordinate.latitude,
+                                    longitude: coordinate.longitude,
+                                    locationInfo: locationInfo) {
+      [weak self] result in
+      guard let `self` = self else { return logger(ErrorLog.retainCycle)}
+      
+      switch result {
+      case .success(let weather):
+        self.weather.append(weather)
       case .failure(let error):
         print(error.localizedDescription)
       }

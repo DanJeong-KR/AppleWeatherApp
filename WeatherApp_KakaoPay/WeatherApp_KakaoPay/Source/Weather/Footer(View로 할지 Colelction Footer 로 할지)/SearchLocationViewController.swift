@@ -9,43 +9,76 @@
 import UIKit
 import MapKit
 
-class SearchLocationViewController: UITableViewController {
+class SearchLocationViewController: UIViewController {
+  
+  // MARK: - Properties
+  private lazy var searchView: UIView = {
+    let v = UIView(frame: .zero)
+    v.backgroundColor = .clear
+    view.addSubview(v)
+    return v
+  }()
+  
+  private lazy var topLabel: UILabel = {
+    let lb = UILabel(frame: .zero)
+    lb.text = "도시, 우편번호 또는 공항 위치 입력"
+    lb.textColor = .white
+    lb.backgroundColor = .clear
+    lb.font = WeatherFont.description
+    view.addSubview(lb)
+    return lb
+  }()
+  
+  private lazy var searchTableView: UITableView = {
+    let tv = UITableView(frame: .zero)
+    tv.dataSource = self
+    tv.delegate = self
+    tv.register(cell: UITableViewCell.self)
+    tv.separatorStyle = .none
+    tv.backgroundColor = .clear
+    view.addSubview(tv)
+    return tv
+  }()
+  
   
   var matchingItems:[MKMapItem] = []
   
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
+  override var prefersStatusBarHidden: Bool {
+    return false
+  }
   
   let searchController = UISearchController(searchResultsController: nil)
 
+  // MARK: - ViewController LifeCyle
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = #colorLiteral(red: 0.1720331609, green: 0.1717363596, blue: 0.1722783148, alpha: 1)
-    configureNavigationBar()
+    self.navigationController?.navigationBar.isHidden = true
+    view.backgroundColor = .clear
     configureSearchController()
-    configureTableView()
-    
+    makeConstraints()
   }
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     searchController.searchBar.becomeFirstResponder()
   }
   
-  private func configureTableView() {
-    tableView.register(cell: UITableViewCell.self)
-    tableView.separatorStyle = .none
-    
+  private func makeConstraints() {
+    topLabel.layout.centerX().top().height(constant: 50)
+    searchView.layout.top(equalTo: topLabel.bottomAnchor).leading().trailing().height(constant: 60)
+    searchTableView.layout.top(equalTo: searchView.bottomAnchor).leading().trailing().bottom()
   }
   
   private func configureNavigationBar() {
+    title = "도시, 우편번호 또는 공항 위치 입력"
     navigationController?.navigationBar.barStyle = .black
     navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.1720331609, green: 0.1717363596, blue: 0.1722783148, alpha: 1)
     navigationController?.navigationBar.isTranslucent = false
   }
   
   private func configureSearchController() {
-    title = "도시, 우편번호 또는 공항 위치 입력"
     //Search Controller
     searchController.searchResultsUpdater = self
     searchController.delegate = self
@@ -54,18 +87,24 @@ class SearchLocationViewController: UITableViewController {
     searchController.obscuresBackgroundDuringPresentation = false
     
     //Search Bar
+    searchController.searchBar.delegate = self
     searchController.searchBar.showsCancelButton = true
     searchController.searchBar.barStyle = .black
-    searchController.searchBar.backgroundColor = #colorLiteral(red: 0.1720331609, green: 0.1717363596, blue: 0.1722783148, alpha: 1)
-    navigationItem.searchController = searchController
+    searchController.searchBar.backgroundColor = .clear
+    //navigationItem.searchController = searchController
+    self.searchView.addSubview(searchController.searchBar)
     definesPresentationContext = true
   }
   
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  
+}
+
+extension SearchLocationViewController: UITableViewDataSource, UITableViewDelegate {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return matchingItems.count
   }
   
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeue(UITableViewCell.self)
     let selectedItem = matchingItems[indexPath.row].placemark
     
@@ -79,11 +118,21 @@ class SearchLocationViewController: UITableViewController {
     return cell
   }
   
-  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    print("haha")
-    let selectItem = matchingItems[indexPath.row]
-    print("\(selectItem.name!) : \(selectItem.placemark.coordinate)" )
-    
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let selectItem = matchingItems[indexPath.row].placemark
+    self.dismiss(animated: false) { // SearchController dismiss 먼저
+      self.dismiss(animated: true, completion: { // self dismiss
+        DataManager.shared.fetchWeather(from: selectItem.coordinate,
+                                        with: selectItem.locality ?? "",
+                                        completionHandler: {
+                                          print("haha :",self.presentingViewController)
+        })
+        
+        
+        
+        
+      })
+    }
   }
 }
 
@@ -97,7 +146,7 @@ extension SearchLocationViewController: UISearchResultsUpdating {
       (response, _) in
       guard let response = response else { return }
       self.matchingItems = response.mapItems
-      self.tableView.reloadData()
+      self.searchTableView.reloadData()
     }
   }
 }
@@ -105,6 +154,11 @@ extension SearchLocationViewController: UISearchResultsUpdating {
 extension SearchLocationViewController: UISearchControllerDelegate {
   func didPresentSearchController(_ searchController: UISearchController) {
     // searcbh
-    searchController.searchBar.becomeFirstResponder()
+  }
+}
+
+extension SearchLocationViewController: UISearchBarDelegate {
+  func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    self.dismiss(animated: true, completion: nil)
   }
 }

@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.makeKeyAndVisible()
-    window?.backgroundColor = .white
+    window?.backgroundColor = #colorLiteral(red: 0.1720331609, green: 0.1717363596, blue: 0.1722783148, alpha: 1)
     window?.rootViewController = WeatherViewController()
 //    window?.rootViewController = MyWeatherListViewController()
     

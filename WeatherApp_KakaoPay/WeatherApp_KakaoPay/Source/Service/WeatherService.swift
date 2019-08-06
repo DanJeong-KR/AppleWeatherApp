@@ -13,7 +13,7 @@ final class WeatherService: WeatherServiceType {
   private let baseURL = "https://api.darksky.net"
   private let appKey = "c857ff3aef911d31170756138e39fb80"
  
-  func fetchWeatherData(latitude: Double, longitude: Double, completionHandler: @escaping (Result<Weather, ServiceError>) -> Void) {
+  func fetchWeatherData(latitude: Double, longitude: Double, locationInfo: String? = nil, completionHandler: @escaping (Result<Weather, ServiceError>) -> Void) {
     
     var urlComponent = URLComponents(string: baseURL)
     urlComponent?.path = "/forecast/\(appKey)/\(latitude),\(longitude)"
@@ -71,11 +71,23 @@ final class WeatherService: WeatherServiceType {
         return logger(ErrorLog.json)
       }
       
-      let weather = Weather(currently: currentlyData,
-                            hourly: hourlyArr,
-                            daily: dailyArr,
-                            subInfo: subInfo)
-      completionHandler(.success(weather))
+      if let locationInfo = locationInfo {
+        // 현재 위치가 아닌 데이터를 가져올 때는 위치와 같이 가져온다.
+        let weather = Weather(locationInfo: locationInfo,
+                              currently: currentlyData,
+                              hourly: hourlyArr,
+                              daily: dailyArr,
+                              subInfo: subInfo)
+        completionHandler(.success(weather))
+      }else {
+        // 현재 위치 날씨정보는 데이터 위치와 동시에 가져오지 않는다.
+        let weather = Weather(locationInfo: nil,
+                              currently: currentlyData,
+                              hourly: hourlyArr,
+                              daily: dailyArr,
+                              subInfo: subInfo)
+        completionHandler(.success(weather))
+      }
     }
     task.resume()
  

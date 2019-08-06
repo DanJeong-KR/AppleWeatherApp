@@ -29,3 +29,7 @@ extension UIControl {
     }
   }
 }
+
+enum NotificationID {
+  static let DataDidChanged = NSNotification.Name("DataDidChanged")
+}
