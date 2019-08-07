@@ -9,7 +9,7 @@
 // CollectionView 들어갈 것
 import UIKit
 
-class ThirdCollectionCell: UICollectionViewCell {
+class SubInfoCell: UICollectionViewCell {
   
   internal lazy var subInfoCollectionView: SubInfoCollectionView = {
     let layout = UICollectionViewFlowLayout()

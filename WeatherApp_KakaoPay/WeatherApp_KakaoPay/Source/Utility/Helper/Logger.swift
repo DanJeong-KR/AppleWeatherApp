@@ -18,9 +18,6 @@ internal func logger(
     // 확장자 지우고 파일 경로 마지막 이름만 표시하자. 폴더 구별 잘하게
     let fileName = fileUrl.deletingPathExtension().lastPathComponent
     
-    //let header = header.isEmpty ? "" : "[ \(header) ] - "
-    //let _ = contents.reduce("") { $0 + " " + String(describing: $1) }
-    
     let str = """
     \(emoji) \(timestamp) \
     \(fileName) / \(function) / (\(line)) \

@@ -40,9 +40,6 @@ class SearchLocationViewController: UIViewController {
     return tv
   }()
   
-  
-  var matchingItems:[MKMapItem] = []
-  
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
@@ -50,7 +47,10 @@ class SearchLocationViewController: UIViewController {
     return false
   }
   
-  let searchController = UISearchController(searchResultsController: nil)
+  private let searchController = UISearchController(searchResultsController: nil)
+  
+  // 검색 결과들
+  private var matchingItems:[MKMapItem] = []
 
   // MARK: - ViewController LifeCyle
   override func viewDidLoad() {
@@ -65,18 +65,13 @@ class SearchLocationViewController: UIViewController {
     searchController.searchBar.becomeFirstResponder()
   }
   
+  // MARK: - Layout Methods
   private func makeConstraints() {
     topLabel.layout.centerX().top().height(constant: 50)
     searchView.layout.top(equalTo: topLabel.bottomAnchor).leading().trailing().height(constant: 60)
     searchTableView.layout.top(equalTo: searchView.bottomAnchor).leading().trailing().bottom()
   }
   
-  private func configureNavigationBar() {
-    title = "도시, 우편번호 또는 공항 위치 입력"
-    navigationController?.navigationBar.barStyle = .black
-    navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.1720331609, green: 0.1717363596, blue: 0.1722783148, alpha: 1)
-    navigationController?.navigationBar.isTranslucent = false
-  }
   
   private func configureSearchController() {
     //Search Controller
@@ -91,7 +86,6 @@ class SearchLocationViewController: UIViewController {
     searchController.searchBar.showsCancelButton = true
     searchController.searchBar.barStyle = .black
     searchController.searchBar.backgroundColor = .clear
-    //navigationItem.searchController = searchController
     self.searchView.addSubview(searchController.searchBar)
     definesPresentationContext = true
   }
@@ -99,6 +93,7 @@ class SearchLocationViewController: UIViewController {
   
 }
 
+// MARK: TableView DataSource and Delegate
 extension SearchLocationViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return matchingItems.count
@@ -138,6 +133,7 @@ extension SearchLocationViewController: UITableViewDataSource, UITableViewDelega
   }
 }
 
+// MARK: - UISearchResultsUpdating
 extension SearchLocationViewController: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
     guard let searchBarText = searchController.searchBar.text else { return }
@@ -153,12 +149,14 @@ extension SearchLocationViewController: UISearchResultsUpdating {
   }
 }
 
+// MARK : - Search ControllerDelegate
 extension SearchLocationViewController: UISearchControllerDelegate {
   func didPresentSearchController(_ searchController: UISearchController) {
     // searcbh
   }
 }
 
+// MARK: - SearchBar Delegate
 extension SearchLocationViewController: UISearchBarDelegate {
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
     self.dismiss(animated: true, completion: nil)

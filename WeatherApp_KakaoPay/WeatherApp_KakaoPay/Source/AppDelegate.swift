@@ -1,11 +1,12 @@
-//
-//  AppDelegate.swift
-//  WeatherApp_KakaoPay
-//
-//  Created by Sicc on 31/07/2019.
-//  Copyright © 2019 chang sic jung. All rights reserved.
-//
 
+
+/**
+### 평가해주셔서 감사합니다.
+프로젝트 제출 후 Github repo를 privacy -> Public 으로 전환하여
+앱을 어떻게 디자인했는지 큰 구성을 보실 수 있습니다.
+ 
+
+*/
 import UIKit
 
 @UIApplicationMain
@@ -19,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window?.makeKeyAndVisible()
     window?.backgroundColor = #colorLiteral(red: 0.1720331609, green: 0.1717363596, blue: 0.1722783148, alpha: 1)
     window?.rootViewController = WeatherViewController()
-//    window?.rootViewController = MyWeatherListViewController()
     
     // MARK: - Get Saved Data
     if let locationData = UserDefaults.standard.object(forKey: "location") as? Data,

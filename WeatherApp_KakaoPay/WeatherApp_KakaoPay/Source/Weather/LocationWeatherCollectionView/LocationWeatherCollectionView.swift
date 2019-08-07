@@ -12,9 +12,9 @@ class LocationWeatherCollectionView: UICollectionView {
   
   // MARK: - Callback
   internal var headerDidLoad: ((LocationWeatherHeaderView) -> Void)?
-  internal var firstCollectionCellDidLoad: ((FirstCollectionCell) -> Void)?
-  internal var secondCollectionCellDidLoad: ((SecondCollectionCell) -> Void)?
-  internal var thirdCollectionCellDidLoad: ((ThirdCollectionCell) -> Void)?
+  internal var firstCollectionCellDidLoad: ((DailyCell) -> Void)?
+  internal var secondCollectionCellDidLoad: ((SummaryCell) -> Void)?
+  internal var thirdCollectionCellDidLoad: ((SubInfoCell) -> Void)?
   
   // MARK: - Initializers
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
@@ -38,9 +38,9 @@ class LocationWeatherCollectionView: UICollectionView {
   // MARK: - Configure
   private func configure() {
     register(LocationWeatherHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: LocationWeatherHeaderView.identifier)
-    register(cell: FirstCollectionCell.self)
-    register(cell: SecondCollectionCell.self)
-    register(cell: ThirdCollectionCell.self)
+    register(cell: DailyCell.self)
+    register(cell: SummaryCell.self)
+    register(cell: SubInfoCell.self)
     dataSource = self
     delegate = self
     // configure
@@ -60,7 +60,7 @@ extension LocationWeatherCollectionView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     switch indexPath.item {
     case 0:
-      let cell = collectionView.dequeue(FirstCollectionCell.self, indexPath)
+      let cell = collectionView.dequeue(DailyCell.self, indexPath)
       if let firstCollectionCellDidLoad  = firstCollectionCellDidLoad {
         firstCollectionCellDidLoad(cell)
       } else {
@@ -68,7 +68,7 @@ extension LocationWeatherCollectionView: UICollectionViewDataSource {
       }
       return cell
     case 1:
-      let cell = collectionView.dequeue(SecondCollectionCell.self, indexPath)
+      let cell = collectionView.dequeue(SummaryCell.self, indexPath)
       if let secondCollectionCellDidLoad  = secondCollectionCellDidLoad {
         secondCollectionCellDidLoad(cell)
       } else {
@@ -76,7 +76,7 @@ extension LocationWeatherCollectionView: UICollectionViewDataSource {
       }
       return cell
     case 2:
-      let cell = collectionView.dequeue(ThirdCollectionCell.self, indexPath)
+      let cell = collectionView.dequeue(SubInfoCell.self, indexPath)
       if let thirdCollectionCellDidLoad  = thirdCollectionCellDidLoad {
         thirdCollectionCellDidLoad(cell)
       } else {

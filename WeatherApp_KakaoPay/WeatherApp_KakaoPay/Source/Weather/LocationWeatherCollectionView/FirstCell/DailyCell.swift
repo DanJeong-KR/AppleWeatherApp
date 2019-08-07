@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FirstCollectionCell: UICollectionViewCell {
+class DailyCell: UICollectionViewCell {
   
   // MARK: - Properties
   private lazy var separateLineView: SeparateLineView = {

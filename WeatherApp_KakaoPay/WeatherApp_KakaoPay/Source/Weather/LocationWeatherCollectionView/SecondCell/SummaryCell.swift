@@ -9,7 +9,7 @@
 // Label 이나 TextView 들어갈 것
 import UIKit
 
-class SecondCollectionCell: UICollectionViewCell {
+class SummaryCell: UICollectionViewCell {
   
   // MARK: - Properties
   internal lazy var descriptionLabel: UILabel = {

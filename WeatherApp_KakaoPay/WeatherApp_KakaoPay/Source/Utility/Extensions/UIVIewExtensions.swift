@@ -13,7 +13,7 @@ import UIKit
  - translatesAutoresizingMaskIntoConstraints 실수 방지하려고 layout 만들기
  - SnapKit 처럼 오토레이웃 잡으려고 반환값을 self 로 해서 만들기
  */
-public extension UIView {
+extension UIView {
   var layout: UIView {
     translatesAutoresizingMaskIntoConstraints = false
     return self
