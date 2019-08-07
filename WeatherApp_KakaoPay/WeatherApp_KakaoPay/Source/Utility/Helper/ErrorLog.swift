@@ -15,4 +15,5 @@ public enum ErrorLog {
   static let retainCycle = "Retain Cycle Error : There is a possibility of memory leaks."
   static let json = "Json Parsing Error"
   static let callback = " Callback did not capture the context. "
+  static let userDefaults = "Invalid UserDefaults Data Error"
 }

@@ -40,9 +40,17 @@ class MyWeatherListViewController: UIViewController {
     return cv
   }()
   
+  private let backgroundImageView: UIImageView = {
+    let iv = UIImageView(frame: ScreenBounds.bounds)
+    iv.image = UIImage(named: "night")
+    iv.contentMode = .scaleToFill
+    return iv
+  }()
+  
   // MARK: - ViewController LifeCyle
   override func viewDidLoad() {
     super.viewDidLoad()
+    view.addSubview(backgroundImageView) // 이미지 뷰 가장 아래쪽에 위치하게
     configureReloadObserver()
     makeConstraints()
   }
@@ -97,6 +105,7 @@ extension MyWeatherListViewController: UICollectionViewDataSource {
   }
 }
 
+// MARK: - Collection FlowLayout and Delegate
 extension MyWeatherListViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     if let weatherVC = self.presentingViewController as? WeatherViewController {

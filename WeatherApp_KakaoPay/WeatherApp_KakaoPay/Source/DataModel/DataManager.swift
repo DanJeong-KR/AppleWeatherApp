@@ -57,6 +57,37 @@ final class DataManager {
     return result
   }
   
+  // MARL: - Location Data 
+  private var location: [Location] = [] {
+    didSet{
+      print("location update :",self.location)
+    }
+  }
+  
+  internal func addLocation(_ location: Location) {
+    self.location.append(location)
+  }
+  
+  internal func getLocation() -> [Location] {
+    return self.location
+  }
+  
+  // 대체하기
+  internal func setLocation(_ location: [Location]) {
+    self.location = location
+  }
+  
+  internal func synchronizeData() {
+    if !self.location.isEmpty {
+      self.location.forEach {
+        fetchWeather(from: CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude), with: $0.location, completionHandler: nil)
+      }
+    }else {
+      logger("Location is Empty")
+    }
+  }
+
+  
   // MARK: - Networking
   // 현재위치 날씨정보 가져오기 (갱신기능)
   internal func fetchCurrentWeather(from coordinate: CLLocationCoordinate2D, completionHandler: (() -> ())? ){

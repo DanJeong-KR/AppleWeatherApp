@@ -122,11 +122,13 @@ extension SearchLocationViewController: UITableViewDataSource, UITableViewDelega
     let selectItem = matchingItems[indexPath.row].placemark
     self.dismiss(animated: false) { // SearchController dismiss 먼저
       self.dismiss(animated: true, completion: { // self dismiss
-        DataManager.shared.fetchWeather(from: selectItem.coordinate,
-                                        with: selectItem.locality ?? "",
-                                        completionHandler: {
-                                          print("haha :",self.presentingViewController)
-        })
+        let coordinate = selectItem.coordinate
+        let locality = selectItem.locality ?? ""
+        let location = Location(location: locality, latitude: coordinate.latitude, longitude: coordinate.longitude)
+        DataManager.shared.addLocation(location)
+        DataManager.shared.fetchWeather(from: coordinate,
+                                        with: locality,
+                                        completionHandler: nil)
         
         
         

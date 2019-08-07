@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,10 +23,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window?.rootViewController = WeatherViewController()
 //    window?.rootViewController = MyWeatherListViewController()
     
+    if let locationData = UserDefaults.standard.object(forKey: "location") as? Data,
+      let decodedData = try? JSONDecoder().decode([Location].self, from: locationData),
+      !locationData.isEmpty {
+      DataManager.shared.setLocation(decodedData)
+    } else {
+      logger(ErrorLog.userDefaults)
+    }
     return true
   }
-
-
+  
+  
+  // MARK: - Background
+  func applicationDidEnterBackground(_ application: UIApplication) {
+    let locationData = DataManager.shared.getLocation()
+    if let encoded = try? JSONEncoder().encode(locationData) {
+      UserDefaults.standard.set(encoded, forKey: "location")
+    } else {
+      logger(ErrorLog.userDefaults)
+    }
+  }
 
 }
 

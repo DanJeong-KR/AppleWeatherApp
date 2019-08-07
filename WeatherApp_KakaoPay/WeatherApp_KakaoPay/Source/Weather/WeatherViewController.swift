@@ -280,6 +280,7 @@ extension WeatherViewController: CLLocationManagerDelegate {
       DataManager.shared.fetchCurrentWeather(from: location.coordinate) {
         // 날씨 정보 먼저 받고 이후에 위치 정보 받는다. (weather 데이터의 첫 데이터는 현재위치로 설정하기 위함)
         self.getLocationInfoByreverseGeocoding(location: location)
+        DataManager.shared.synchronizeData()
       }
       lastRequestDate = currentDate
     }
