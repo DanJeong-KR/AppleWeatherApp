@@ -38,6 +38,7 @@ class MyWeatherListFooterView: UICollectionReusableView {
   private lazy var plusButton: UIButton = {
     let bt = UIButton(type: .custom)
     bt.setTitle("+", for: .normal)
+    bt.titleLabel?.font = UIFont.systemFont(ofSize: 30, weight: .medium)
     bt.setTitleColor(WeatherColor.subTextColor, for: .normal)
     bt.titleLabel?.font = WeatherFont.day
     bt.addTarget(self, action: #selector(buttonDidTap(_:)), for: .touchUpInside)
@@ -48,8 +49,8 @@ class MyWeatherListFooterView: UICollectionReusableView {
   
   private lazy var detailWeatherButton: UIButton = {
     let bt = UIButton(type: .custom)
-    bt.backgroundColor = .yellow
-    bt.setTitle("test", for: .normal)
+    bt.setImage(UIImage(named: "safari")?.withRenderingMode(.alwaysTemplate), for: .normal)
+    bt.tintColor = .lightGray
     bt.addTarget(self, action: #selector(buttonDidTap(_:)), for: .touchUpInside)
     bt.id = ButtonID.detailWeatherButton.id
     addSubview(bt)

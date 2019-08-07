@@ -13,8 +13,8 @@ class WeatherToolBar: UIToolbar {
   // MARK: - Properties
   private lazy var detailWeatherButton: UIButton = {
     let bt = UIButton(type: .custom)
-    bt.backgroundColor = .yellow
-    bt.setTitle("test", for: .normal)
+    bt.setImage(UIImage(named: "safari")?.withRenderingMode(.alwaysTemplate), for: .normal)
+    bt.tintColor = .lightGray
     bt.id = ButtonID.detailWeatherButton.id
     bt.addTarget(self, action: #selector(buttonDidTap(_:)), for: .touchUpInside)
     addSubview(bt)
@@ -23,22 +23,13 @@ class WeatherToolBar: UIToolbar {
   
   private lazy var locationListButton: UIButton = {
     let bt = UIButton(type: .custom)
-    bt.backgroundColor = .yellow
-    bt.setTitle("test", for: .normal)
+    bt.setImage(UIImage(named: "list")?.withRenderingMode(.alwaysTemplate), for: .normal)
+    bt.tintColor = .lightGray
     bt.id = ButtonID.locationListButton.id
     bt.addTarget(self, action: #selector(buttonDidTap(_:)), for: .touchUpInside)
     addSubview(bt)
     return bt
   }()
-  
-//  internal lazy var pageControl: UIPageControl = {
-//    let pc = UIPageControl(frame: .zero)
-//    pc.numberOfPages = 1
-//    pc.currentPageIndicatorTintColor = .white
-//    pc.pageIndicatorTintColor = .gray
-//    addSubview(pc)
-//    return pc
-//  }()
   
   // MARK: - Callback
   internal var detailWeatherButtonDidTap: (() -> ())?
