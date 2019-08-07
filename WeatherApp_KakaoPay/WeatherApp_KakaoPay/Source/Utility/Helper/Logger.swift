@@ -1,6 +1,6 @@
 import Foundation
 
-public func logger(
+internal func logger(
     _ contents: Any,
     _ file: String = #file,
     _ function: String = #function,

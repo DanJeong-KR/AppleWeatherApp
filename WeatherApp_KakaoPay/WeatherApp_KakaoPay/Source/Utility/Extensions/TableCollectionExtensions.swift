@@ -16,7 +16,7 @@ extension UICollectionReusableView: Identifiable { }
 
 // register : 타입만 받아서 cell 간편하게 등록해줌
 // dequeue : as? 쓰지 않아도 자기 자신의 타입과 cell id 로 자동으로 반환하게 해주는 아이
-public extension UITableView {
+extension UITableView {
   // regiser 가 제네릭 타입 이라 Identifiable 프로토콜 을 채택하지 않은 Cell 이 들어올 수 있는 변수 때문에 where 로 제한할 것.
   func register<Cell>(
     cell: Cell.Type,
@@ -33,7 +33,7 @@ public extension UITableView {
   }
 }
 
-public extension UICollectionView {
+extension UICollectionView {
   func register<Cell> (
     cell: Cell.Type,
     forCellReuseIdentifier reuseIdentifier: String = Cell.identifier

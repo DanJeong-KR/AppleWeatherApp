@@ -7,13 +7,11 @@
 //
 
 import UIKit
-import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
-
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
@@ -23,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window?.rootViewController = WeatherViewController()
 //    window?.rootViewController = MyWeatherListViewController()
     
+    // MARK: - Get Saved Data
     if let locationData = UserDefaults.standard.object(forKey: "location") as? Data,
       let decodedData = try? JSONDecoder().decode([Location].self, from: locationData),
       !locationData.isEmpty {
@@ -34,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   
-  // MARK: - Background
+  // MARK: - Background - Save Data at userdefaults
   func applicationDidEnterBackground(_ application: UIApplication) {
     let locationData = DataManager.shared.getLocation()
     if let encoded = try? JSONEncoder().encode(locationData) {

@@ -41,13 +41,10 @@ class WeatherCollectionCell: UICollectionViewCell {
   
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
+    fatalError(ErrorLog.coderInit)
   }
   
   // MARK: - Layout Methods
-  override func layoutSubviews() {
-    super.layoutSubviews()
-  }
-  
   private func makeConstraints() {
     currentLocationWeatherView.layout.top().leading().trailing().height(constant: ScreenBounds.height * 0.40)
     locationWeatherCollectionView.layout.top(equalTo: currentLocationWeatherView.bottomAnchor).leading().trailing().bottom()

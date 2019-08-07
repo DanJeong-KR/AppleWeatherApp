@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum ErrorLog {
+enum ErrorLog {
   static let layout = "Layout Error"
   static let coderInit = "init(coder:) has not been implemented"
   static let unwrap = "Can't be unwrapped"

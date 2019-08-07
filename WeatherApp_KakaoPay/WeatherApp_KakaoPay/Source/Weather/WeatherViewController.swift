@@ -11,7 +11,7 @@ import CoreLocation
 
 final class WeatherViewController: UIViewController {
   
-  // MARK: - Data Properties
+  // MARK: - DataModel Properties
   private var weather: [Weather]? {
     return DataManager.shared.getWeather()
   }
@@ -25,7 +25,7 @@ final class WeatherViewController: UIViewController {
   // MARK: - Location Properties
   private let locationManager = CLLocationManager()
   
-  // 지금으로 부터 10초 전
+  // 지금으로 부터 10초 전 (특정 시점의 위치 정보를 받기 위함)
   private var lastRequestDate = Date(timeIntervalSinceNow: -10)
   
   // MARK: - Properties
@@ -66,7 +66,7 @@ final class WeatherViewController: UIViewController {
   
   internal lazy var pageControl: UIPageControl = {
     let pc = UIPageControl(frame: .zero)
-    pc.numberOfPages = 4
+    pc.numberOfPages = 1
     pc.currentPageIndicatorTintColor = .white
     pc.pageIndicatorTintColor = .gray
     weatherToolBar.addSubview(pc)
@@ -120,7 +120,7 @@ final class WeatherViewController: UIViewController {
     }
   }
   
-  // MARK: - Location
+  // MARK: - Location Methods
   private func configureLocationManager() {
     locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
     locationManager.delegate = self
@@ -167,14 +167,14 @@ extension WeatherViewController: UICollectionViewDataSource {
       let currently = weather[indexPath.row].currently
       let hourly = weather[indexPath.row].hourly
       let daily = weather[indexPath.row].daily
-      //let locationInfo = weather.locationInfo
       // Currently
-      cell.currentLocationWeatherView.configureCurrentWeather(location: weatherIndex.locationInfo ?? "",
-                                                              summary: currently.summary,
-                                                              temperature: currently.temperature,
-                                                              day: currently.time,
-                                                              maxTemperature: dailyFirst.temperatureMax,
-                                                              minTemperature: daily.first!.temperatureMin
+      cell.currentLocationWeatherView.configureCurrentWeather(
+        location: weatherIndex.locationInfo ?? "",
+        summary: currently.summary,
+        temperature: currently.temperature,
+        day: currently.time,
+        maxTemperature: dailyFirst.temperatureMax,
+        minTemperature: daily.first!.temperatureMin
       )
       
       // Hourly CallBack
@@ -274,37 +274,27 @@ extension WeatherViewController: CLLocationManagerDelegate {
     
     // 최초 정보와 시간 차가 2초 이상 날 때만 데이터 업데이트 시킬 생각
     if abs(lastRequestDate.timeIntervalSince(currentDate)) > 2 {
-      // 현재위치 지역이름 가져오기
       // location 정보를 통해 네트워크로 날씨정보 가져오기
-//      fetchWeather(from: location)
       DataManager.shared.fetchCurrentWeather(from: location.coordinate) {
         // 날씨 정보 먼저 받고 이후에 위치 정보 받는다. (weather 데이터의 첫 데이터는 현재위치로 설정하기 위함)
-        self.getLocationInfoByreverseGeocoding(location: location)
+        self.getLocationInfoByreverseGeocoding(location: location) // 현재위치 지역이름 가져오기
         DataManager.shared.synchronizeData()
       }
       lastRequestDate = currentDate
     }
   }
   
-  // 위치 정보 location 을 인자로 받는다.
   private func getLocationInfoByreverseGeocoding(location: CLLocation){
     
     let geocoder = CLGeocoder()
-    geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
-      guard let `self` = self else { return }
+    geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
       guard error == nil else { return logger(error!.localizedDescription) }
       guard let place = placemarks?.first else { return }
       
-      let locality = place.locality ?? "" //  중구
-      let subLocality = place.subLocality ?? "" // 신당동
-      let thoroughfare = place.thoroughfare ?? "" // 남산대로 / subLocality 로 나타나지 않는 것들이 thoroughfare 속성으로 들어온다.
-      let address = locality + " " + (!subLocality.isEmpty ? subLocality : thoroughfare)
-      
-      DataManager.shared.setCurrentLocationInfo(locality)
-      print("locality : \(locality)")
-      print("sublocality : \(subLocality)")
-      print("thoroughfare : \(thoroughfare)")
-      print("address : \(address)")
+      let locality = place.locality //  중구
+      let subLocality = place.subLocality // 신당동
+      DataManager.shared.setCurrentLocationInfo(locality ?? subLocality ?? "")
+
     }
   }
   
