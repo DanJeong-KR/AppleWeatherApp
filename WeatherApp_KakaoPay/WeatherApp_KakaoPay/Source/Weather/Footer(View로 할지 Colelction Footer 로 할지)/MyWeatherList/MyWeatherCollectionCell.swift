@@ -10,6 +10,7 @@ import UIKit
 
 class MyWeatherCollectionCell: UICollectionViewCell {
   
+  // MARK: - Properties
   private lazy var locationLabel: UILabel = {
     let lb = UILabel(frame: .zero)
     lb.text = ""
@@ -50,6 +51,7 @@ class MyWeatherCollectionCell: UICollectionViewCell {
     fatalError(ErrorLog.coderInit)
   }
   
+  // MARK: - Layout Methods
   private func makeConstrains() {
     timeLabel.layout.top(constant: 20).leading(constant: WeatherLayout.leftPadding)
     locationLabel.layout.top(equalTo: timeLabel.bottomAnchor).leading(constant: WeatherLayout.leftPadding)

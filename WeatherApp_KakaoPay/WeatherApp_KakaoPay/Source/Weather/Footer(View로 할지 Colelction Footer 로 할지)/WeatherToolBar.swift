@@ -56,7 +56,6 @@ class WeatherToolBar: UIToolbar {
     let guide = self.safeAreaLayoutGuide
     detailWeatherButton.layout.centerY().leading(equalTo: guide.leadingAnchor, constant: 10)
     locationListButton.layout.centerY().trailing(equalTo: guide.trailingAnchor, constant: -10)
-    //pageControl.layout.centerX().centerY()
   }
   
   // MARK: - Action Methods

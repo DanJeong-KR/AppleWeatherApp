@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyWeatherListViewController: UIViewController {
+final class MyWeatherListViewController: UIViewController {
   
   // MARK: - Data
   private var weather: [Weather]? {

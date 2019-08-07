@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 
+// 전체 데이터를 관리하는 Manager
 final class DataManager {
   static let shared = DataManager()
   private init(){}
@@ -16,7 +17,7 @@ final class DataManager {
   let weatherService: WeatherServiceType = WeatherService()
   let noti = NotificationCenter.default
   
-  // MAKR: - Weather Data
+  // MAKR: - Weather Data (내부에서만 접근 가능)
   private var weather: [Weather] = [] {
     didSet {
       noti.post(name: NotificationID.DataDidChanged, object: nil)
@@ -72,7 +73,6 @@ final class DataManager {
     return self.location
   }
   
-  // 대체하기
   internal func setLocation(_ location: [Location]) {
     self.location = location
   }

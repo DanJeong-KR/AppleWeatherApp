@@ -1,10 +1,13 @@
 
 
 /**
-### 평가해주셔서 감사합니다.
-프로젝트 제출 후 Github repo를 privacy -> Public 으로 전환하여
-앱을 어떻게 디자인했는지 큰 구성을 보실 수 있습니다.
- 
+평가해주셔서 감사합니다.
+ * Apple 날씨 앱을 만들었습니다.
+* 프로젝트 제출 후 Github repo를 privacy -> Public 으로 전환하여 앱을 어떻게 디자인했는지 큰 구성을 보실 수 있습니다.
+* 디자인은 마인드 맵(심플 마인드 프로그램)입니다.
+* 과제 중간에 수시로 Commit을 Message 규칙을 정해놓고 했기 때문에 Commit Log로도 중간 단계를 확인할 수 있습니다.
+* 사용 API 는 Dark Weather API 입니다.
+https://github.com/changSic/Kakaopay_internship
 
 */
 import UIKit

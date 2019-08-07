@@ -103,6 +103,7 @@ class MyWeatherListFooterView: UICollectionReusableView {
     }
   }
   
+  // safari 앱 열기
   private func openSafariForDetial() {
     guard let url = URL(string: "https://weather.com/ko-KR/weather/today/l/Seodaemun+gu+Seoul?canonicalCityId=41c20b9e59a1464c5b8d316200c6deb511ff191cf1fadb295f52bf3b6b7b5642"),
       UIApplication.shared.canOpenURL(url) else {
