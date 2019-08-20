@@ -3,7 +3,7 @@
 * 기간 : 2019.08.01 ~ 2019.08.07
 * 소속 : 개인프로젝트
 * 역할 : iOS 앱개발
-* 사용기술 : Swift5, Network(Model and Pars), MapKit
+* 사용기술 : Swift5, Network(Model and Parser), MapKit
 
 ### 설계 (마인드맵)
 <a href="https://github.com/changSic/LottoriApp/files/3479876/Design_All.pdf" target="_blank"><img src="https://user-images.githubusercontent.com/38423205/62675911-edcf2080-b9e3-11e9-962a-4d0fa2379793.png" alt="My Image" width="1000"></a>
