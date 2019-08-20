@@ -6,7 +6,7 @@
 * 사용기술 : Swift5, Network(Model and Parser), MapKit
 
 ### 설계 (마인드맵)
-<a href="https://github.com/changSic/LottoriApp/files/3479876/Design_All.pdf" target="_blank"><img src="https://user-images.githubusercontent.com/38423205/62675911-edcf2080-b9e3-11e9-962a-4d0fa2379793.png" alt="My Image" width="750"></a>
+<a href="https://user-images.githubusercontent.com/38423205/62675911-edcf2080-b9e3-11e9-962a-4d0fa2379793.png" target="_blank"><img src="https://user-images.githubusercontent.com/38423205/62675911-edcf2080-b9e3-11e9-962a-4d0fa2379793.png" alt="My Image" width="750"></a>
 * [화면구성 부분](https://github.com/changSic/LottoriApp/files/3479875/Design_Weather.pdf)
 * [데이터 모델 부분](https://github.com/changSic/LottoriApp/files/3479873/Design_DataModel.pdf)
 * [네트워크 부분](https://github.com/changSic/LottoriApp/files/3479874/Design_Service.pdf)
