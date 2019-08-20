@@ -7,21 +7,21 @@
 
 ### 설계 (마인드맵)
 <a href="https://github.com/changSic/LottoriApp/files/3479876/Design_All.pdf" target="_blank"><img src="https://user-images.githubusercontent.com/38423205/62675911-edcf2080-b9e3-11e9-962a-4d0fa2379793.png" alt="My Image" width="1000"></a>
-  * [화면구성 부분](https://github.com/changSic/LottoriApp/files/3479875/Design_Weather.pdf)
-  * [데이터 모델 부분](https://github.com/changSic/LottoriApp/files/3479873/Design_DataModel.pdf)
-  * [네트워크 부분](https://github.com/changSic/LottoriApp/files/3479874/Design_Service.pdf)
-  * [유틸리티 부분 (Extension, Helper)](https://github.com/changSic/LottoriApp/files/3479872/Design_Uitility.pdf)
+* [화면구성 부분](https://github.com/changSic/LottoriApp/files/3479875/Design_Weather.pdf)
+* [데이터 모델 부분](https://github.com/changSic/LottoriApp/files/3479873/Design_DataModel.pdf)
+* [네트워크 부분](https://github.com/changSic/LottoriApp/files/3479874/Design_Service.pdf)
+* [유틸리티 부분 (Extension, Helper)](https://github.com/changSic/LottoriApp/files/3479872/Design_Uitility.pdf)
 
-* ### [Commit Message 규칙](https://changsic.github.io/CommitMessage/)
-  * `feat` : 새로운 기능 추가
-  * `fix` : 버그 수정
-  * `docs` : 문서 수정
-  * `style` : 파일 그룹화, 세미콜론 누락, 코드 변경이 없는 경우
-  * `refactor` : 코드 리펙토링
-  * `test` : 테스트 코드, 리펙토링 테스트 코드 추가
+### [Commit Message 규칙](https://changsic.github.io/CommitMessage/)
+* `feat` : 새로운 기능 추가
+* `fix` : 버그 수정
+* `docs` : 문서 수정
+* `style` : 파일 그룹화, 세미콜론 누락, 코드 변경이 없는 경우
+* `refactor` : 코드 리펙토링
+* `test` : 테스트 코드, 리펙토링 테스트 코드 추가
 
-* ### Reference
-  * [Dark Sky API](https://darksky.net/dev/docs)
+### Reference
+* [Dark Sky API](https://darksky.net/dev/docs)
 
 ### 스크린샷
 
