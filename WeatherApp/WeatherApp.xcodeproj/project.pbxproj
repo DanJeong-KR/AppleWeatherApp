@@ -50,6 +50,7 @@
 		8EC2172B22F1F057006CFD1D /* WeatherCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC2172A22F1F057006CFD1D /* WeatherCollectionCell.swift */; };
 		8EC2172D22F1F3D9006CFD1D /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC2172C22F1F3D9006CFD1D /* Logger.swift */; };
 		8EC2173522F1F41B006CFD1D /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC2173322F1F41B006CFD1D /* Identifiable.swift */; };
+		8EE8859E231A64350039D3F9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE8859D231A64350039D3F9 /* File.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +99,7 @@
 		8EC2172A22F1F057006CFD1D /* WeatherCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCollectionCell.swift; sourceTree = "<group>"; };
 		8EC2172C22F1F3D9006CFD1D /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		8EC2173322F1F41B006CFD1D /* Identifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
+		8EE8859D231A64350039D3F9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -299,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				8E77128B22F6DFC700B763DF /* UIVIewExtensions.swift */,
+				8EE8859D231A64350039D3F9 /* File.swift */,
 				8E77128D22F6DFF800B763DF /* TableCollectionExtensions.swift */,
 				8EC2173322F1F41B006CFD1D /* Identifiable.swift */,
 				8E7712AA22F94CFF00B763DF /* AlertExtensions.swift */,
@@ -414,6 +417,7 @@
 				8EC2172D22F1F3D9006CFD1D /* Logger.swift in Sources */,
 				8E7712A522F888E600B763DF /* DailyWeatherCollectionView.swift in Sources */,
 				8E7712A922F8AA8A00B763DF /* SubInfo.swift in Sources */,
+				8EE8859E231A64350039D3F9 /* File.swift in Sources */,
 				8E9F6DD022F3D2FC00DB9869 /* CurrentLocationWeatherView.swift in Sources */,
 				8E9F6DC922F3C7F900DB9869 /* ErrorLog.swift in Sources */,
 				8E9F6DF522F44DBA00DB9869 /* WeatherToolBar.swift in Sources */,

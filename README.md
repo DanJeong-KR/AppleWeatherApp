@@ -33,5 +33,9 @@
 <br>
 
 ### 문제해결 아카이브
+* Json 데이터를 struct로 구조화할 때 Codable을 활용하면 데이터를 커스텀하기가 난해하기 때문에 커스텀이 필요한 데이터들은JSONSerialization을 활용할 수 있을까?
+  * Optional 을 반환할 수 있는 Failer Initializer를 활용하여 JSONSerialization로 데이터모델을 구현할 수 있었다. (https://user-images.githubusercontent.com/38423205/64092872-5d40f180-cd91-11e9-9bdf-80f23182d15e.png)
+* Snapkit을 사용하지 않고 Autolayout을 빠르고 오류없이 작성할 수 있을까?
+  * extension을 통해 UIVIew를 확장시켜 Snapkit에 있는 메소드들을 비슷하게 구현해서 사용할 수 있었다. 이후에 유용한 extension이나 helper 메소드를 정리하는 CleanHelper 프로젝트로 확장 (https://github.com/changSic/CleanHelper)
 * 어플을 종료해도 위치 데이터가 유실되지 않고 저장되어야 한다.
   * UserDefaults객체에 위치의 위도와 경도를 저장하는 것으로 해결할 수 있었다.
